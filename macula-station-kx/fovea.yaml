@@ -1,0 +1,41 @@
+# The first claim mcl-fovea observes: a macula station accepts only
+# post-quantum key exchange (macula-fovea spec v0.4).
+#
+# NOT GRID-COMPLETE, on purpose: this assessment exists to declare one claim
+# and have it observed, so it holds the one cell that claim lives in
+# (in_motion.confidentiality). `fovea lint` reports the other 79 cells of the
+# grid as missing (grid_missing_cell); that is known, and no other finding is.
+fovea: "0.4"
+system: macula-station-kx
+assessment_date: 2026-09-29
+owner: raf.lefever@erlef.org
+description: >-
+  Whether a macula station completes a key exchange only on the post-quantum
+  groups it offers, observed from outside by mcl-fovea.
+attributes:
+  core: [confidentiality, integrity, availability, authenticity, accountability]
+  enabled: []
+  disabled_justifications:
+    possession: One claim about key exchange; physical control of a station is out of this assessment's scope.
+    utility: One claim about key exchange; usefulness of data is out of this assessment's scope.
+columns:
+  actors: [internal, external, trusted_partner, machine_agent]
+  lifecycle: [create, acquire, deliver, operate, admin, decommission]
+  data: [at_rest, in_motion, in_use]
+  environment: [physical_natural, socio_legal, temporal]
+cells_dir: cells/
+targets:
+  fleet_stations:
+    kind: macula_station
+    stations:
+      # station-nl-ams: its QUIC listener and its node id, as macula-fleet
+      # configures it.
+      - address: "[2600:3c0e::2000:c2ff:fed0:f20b]:4433"
+        node_id: "000370eebafa9a89a44c9448b4796788fbff1885abd67c80d681d28cebb04b0c"
+policy:
+  publish: every_result
+  cadence: PT1H
+  suspended: []
+  observers:
+    # mcl-fovea on debian-gb-lon, admitted to the io.macula realm.
+    - "00c71da98e6fd854779266ba63dc2f4d79d86d0f5ed761d9c3bf886cd5337b52"

@@ -1,0 +1,36 @@
+id: in_motion.confidentiality
+status: assessed
+owner: raf.lefever@erlef.org
+threat:
+  definition: >-
+    An actor records traffic between a macula client and a station now and
+    decrypts it later with a quantum computer, or talks a station into a
+    classical key exchange it can already break, and so reads what moves
+    between mesh nodes.
+  manifestations:
+    - Harvest-now, decrypt-later capture of QUIC traffic to a station
+    - A client or on-path party offering only classical groups, and a station that accepts them
+defense:
+  detection:
+    - measure: >-
+        mcl-fovea, outside the fleet, attempts a handshake with the station on
+        each post-quantum group and each classical group, and publishes what it
+        saw as a signed observation anyone can verify.
+      status: by_design
+      source: macula-services/mcl-fovea (probe_kx_groups); macula-fovea spec v0.4, 15 and 16
+  countermeasures:
+    - measure: A station completes a key exchange only on SecP384r1MLKEM1024 or SecP256r1MLKEM768, and refuses every classical group.
+      status: by_design
+      source: macula-pqc (the one provider macula's QUIC configuration is built from); macula native/macula_quic/src/config.rs
+      evidence:
+        - kind: probe
+          claim: kx_post_quantum_only
+          probe: kx_group
+          version: 1
+          target: fleet_stations
+          expect:
+            accepted: [secp384r1_mlkem1024, secp256r1_mlkem768]
+            refused: [x25519, secp256r1, secp384r1]
+        - kind: test
+          ref: macula-io/macula native/macula_quic/src/config.rs (a_classical_only_peer_cannot_agree_with_us)
+  recovery: []
