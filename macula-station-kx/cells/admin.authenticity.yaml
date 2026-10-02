@@ -1,5 +1,5 @@
 id: admin.authenticity
-status: assumed
+status: assessed
 owner: raf.lefever@erlef.org
 threat:
   definition: 'Administrative authority is forged or captured: an admin account is taken over, a signing key is stolen, or an attacker issues management actions the real admin never made.'
@@ -16,6 +16,9 @@ defense:
   - measure: The on-box signer anchor can only be rotated by the current signer
     status: by_design
     source: macula-io/macula-fleet
+    evidence:
+    - kind: test
+      ref: macula-io/mcl-fovea-fleet reconcile/reconcile_test.sh (the on-box anchor rotated only by the current signer)
   - measure: Admin credentials are hardware-bound where possible
     status: org
   recovery:

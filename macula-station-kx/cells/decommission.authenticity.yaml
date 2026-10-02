@@ -1,5 +1,5 @@
 id: decommission.authenticity
-status: assumed
+status: assessed
 owner: raf.lefever@erlef.org
 threat:
   definition: 'A retired station''s identity outlives it: its key still verifies, its records still circulate, and nothing tells peers the station is gone, so its name can be taken over.'
@@ -15,6 +15,9 @@ defense:
   countermeasures:
   - measure: Decommissioning publishes the tombstones and unpins the node id
     status: org
+    evidence:
+    - kind: test
+      ref: macula-io/macula-realm apps/project_realm/test/project_realm/realm_membership_revoked_v1_to_realm_members_test.exs
   - measure: Client configs are re-pinned to live stations
     status: org
   recovery:

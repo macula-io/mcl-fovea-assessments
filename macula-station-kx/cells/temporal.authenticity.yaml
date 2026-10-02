@@ -1,5 +1,5 @@
 id: temporal.authenticity
-status: assumed
+status: assessed
 owner: raf.lefever@erlef.org
 threat:
   definition: 'Old identities outlive their truth: a superseded key still verifies, a retired scheme still signs, and readers accept signatures the present no longer stands behind.'
@@ -16,6 +16,9 @@ defense:
   - measure: 'Trust-list expiry: a station with no current trust list checks nothing'
     status: by_design
     source: macula-io/macula plans/DESIGN_PQ_DHT_SLOTS_AND_BUDGET.md
+    evidence:
+    - kind: test
+      ref: macula-io/macula test/macula_record_trust_list_tests.erl (a_trust_list_round_trips_its_pairs_test)
   - measure: Key supersession via published, signed rotation
     status: org
   recovery:

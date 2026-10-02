@@ -1,5 +1,5 @@
 id: physical_natural.integrity
-status: assumed
+status: assessed
 owner: raf.lefever@erlef.org
 threat:
   definition: 'The physical world corrupts the station: heat, power spikes, cosmic rays and aging hardware damage storage and memory, silently altering what the station holds and serves.'
@@ -15,6 +15,9 @@ defense:
   countermeasures:
   - measure: ECC memory and monitored hardware on station boxes
     status: org
+    evidence:
+    - kind: test
+      ref: macula-io/macula test/macula_record_cbor_strict_tests.erl (duplicate_key_at_the_top_level_is_refused_test)
   - measure: Backups of the identity volume, taken and tested
     status: org
   recovery:

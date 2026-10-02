@@ -1,5 +1,5 @@
 id: internal.availability
-status: assumed
+status: assessed
 owner: raf.lefever@erlef.org
 threat:
   definition: 'A trusted insider takes a station down or degrades it: misconfiguration, a bad deployment, or deliberate shutdown of the QUIC listener, cutting a region of the mesh off.'
@@ -16,6 +16,9 @@ defense:
   - measure: 'Six fleet stations: any one outage is a partial mesh, and pools re-dial pinned seeds'
     status: by_design
     source: macula-io/macula (mesh pool)
+    evidence:
+    - kind: test
+      ref: macula-io/macula test/macula_pubsub_system/macula_pubsub_connect_selfheal_tests.erl (connect_watchdog_recycles_wedged_link_test_)
   - measure: A second person reviews every fleet change before it ships
     status: org
   recovery:

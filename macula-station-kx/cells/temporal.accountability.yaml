@@ -1,5 +1,5 @@
 id: temporal.accountability
-status: assumed
+status: assessed
 owner: raf.lefever@erlef.org
 threat:
   definition: 'Time obscures responsibility: review dates pass unobserved, retention obligations collide with secrecy, and nobody can say who was accountable for a decision years later.'
@@ -16,6 +16,9 @@ defense:
   - measure: Named owners and review_by dates on every cell, enforced mechanically
     status: by_design
     source: macula-io/macula-fovea
+    evidence:
+    - kind: test
+      ref: 'macula-io/macula-fovea cli/internal/core/commands_test.go (testdata: one assessment per lint rule)'
   - measure: Records and their keepers preserve the history of what was signed when
     status: by_design
     source: macula-io/mcl-fovea-records

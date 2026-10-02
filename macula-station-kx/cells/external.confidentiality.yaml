@@ -1,5 +1,5 @@
 id: external.confidentiality
-status: assumed
+status: assessed
 owner: raf.lefever@erlef.org
 threat:
   definition: 'An outside adversary, without valid credentials, extracts content from a station across the internet: reads DHT records it should not see, unseals relayed payloads, or recovers the signing key.'
@@ -19,6 +19,9 @@ defense:
   - measure: Only the QUIC listener is exposed; everything the station serves goes through the authenticated handshake
     status: by_design
     source: macula-io/macula
+    evidence:
+    - kind: test
+      ref: macula-io/macula test/macula_call_seal_tests.erl (a_keyed_advertisement_seals_to_its_key_test)
   - measure: Sealed payloads mean the station itself cannot read relayed calls
     status: by_design
     source: macula-io/macula plans/DESIGN_E2E_PAYLOAD_CONFIDENTIALITY.md

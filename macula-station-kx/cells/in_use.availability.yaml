@@ -1,5 +1,5 @@
 id: in_use.availability
-status: assumed
+status: assessed
 owner: raf.lefever@erlef.org
 threat:
   definition: 'The station runs out of ability to compute: CPU, memory or file descriptors exhaust under load, and the station stops serving even though nothing failed.'
@@ -15,6 +15,9 @@ defense:
   - measure: Slot budgets and admission bounds cap verification work
     status: by_design
     source: macula-io/macula plans/DESIGN_PQ_DHT_SLOTS_AND_BUDGET.md
+    evidence:
+    - kind: test
+      ref: macula-io/macula test/macula_client_peer_budget_tests.erl (a_new_peer_within_the_budget_is_allowed_test)
   - measure: OTP supervision isolates overload to the failing part
     status: by_design
     source: macula-io/macula (OTP release)

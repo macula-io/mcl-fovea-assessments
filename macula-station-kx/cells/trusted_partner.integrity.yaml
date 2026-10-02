@@ -1,5 +1,5 @@
 id: trusted_partner.integrity
-status: assumed
+status: assessed
 owner: raf.lefever@erlef.org
 threat:
   definition: Something the station depends on is altered upstream — a tampered release, a poisoned dependency, a modified base image — so the station runs code nobody reviewed.
@@ -19,6 +19,9 @@ defense:
   - measure: Digest-pinned images and verified provenance
     status: by_design
     source: macula-ci-images (attest-image.yml)
+    evidence:
+    - kind: test
+      ref: macula-io/mcl-fovea-fleet reconcile/reconcile_test.sh (each gate rule, against throwaway keys)
   - measure: Dependency updates land through reviewed PRs, not silently
     status: org
   recovery:

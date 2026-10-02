@@ -1,5 +1,5 @@
 id: in_use.authenticity
-status: assumed
+status: assessed
 owner: raf.lefever@erlef.org
 threat:
   definition: 'What the station computes on is not what it appears to be: a hijacked process, an injected library, or a swapped binary performs the signing and verification on the station''s behalf.'
@@ -16,6 +16,9 @@ defense:
   - measure: The release runs from a verified, digest-pinned image
     status: by_design
     source: macula-io/macula-fleet
+    evidence:
+    - kind: test
+      ref: macula-services/mcl-fovea apps/observe_claims/native (a_station_accepting_classical_groups_is_seen_accepting_them)
   - measure: Runtime attestation of the running station
     status: roadmap
   recovery:

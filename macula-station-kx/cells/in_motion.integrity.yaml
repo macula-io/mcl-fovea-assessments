@@ -1,5 +1,5 @@
 id: in_motion.integrity
-status: assumed
+status: assessed
 owner: raf.lefever@erlef.org
 threat:
   definition: 'Data crossing the mesh is altered in flight: frames are modified between peers, a relay reorders or drops parts of a stream, or an on-path actor injects content into a session.'
@@ -19,6 +19,9 @@ defense:
   - measure: QUIC's authenticated encryption protects every frame in transit
     status: by_design
     source: macula-io/macula (QUIC transport)
+    evidence:
+    - kind: test
+      ref: macula-io/macula test/macula_frame_malformed_tests.erl (parse_received_test_)
   - measure: End-to-end signatures on records mean path changes cannot pass
     status: by_design
     source: macula-io/macula plans/DESIGN_PQ_SIGNED_FRAMES_AND_RECORDS.md

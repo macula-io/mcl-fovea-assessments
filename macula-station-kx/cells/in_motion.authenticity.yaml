@@ -1,5 +1,5 @@
 id: in_motion.authenticity
-status: assumed
+status: assessed
 owner: raf.lefever@erlef.org
 threat:
   definition: 'Identity is not what it claims mid-flight: a session is hijacked, a relay poses as the destination, or a frame is replayed from an earlier exchange.'
@@ -16,6 +16,9 @@ defense:
   - measure: Handshake v5 binds the session to its TLS channel
     status: by_design
     source: macula-io/macula (handshake v5)
+    evidence:
+    - kind: test
+      ref: macula-io/macula test/macula_frame_received_tests.erl (every_builder_output_passes_test_)
   - measure: Fresh nonces and sequence numbers make replays fail
     status: by_design
     source: macula-io/macula (frame seq)

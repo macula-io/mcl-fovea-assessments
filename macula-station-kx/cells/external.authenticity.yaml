@@ -1,5 +1,5 @@
 id: external.authenticity
-status: assumed
+status: assessed
 owner: raf.lefever@erlef.org
 threat:
   definition: 'A stranger on the internet poses as the station or as a realm authority: answers at the station''s address, presents a stolen or guessed identity, and gets peers to trust what it says.'
@@ -19,6 +19,9 @@ defense:
   - measure: The handshake challenge binds the session to the node's signing key
     status: by_design
     source: macula-io/macula (handshake v5)
+    evidence:
+    - kind: test
+      ref: macula-io/macula test/overlay/macula_hyparview_endorsement_tests.erl (endorsement_test_)
   - measure: Realm trust is by key, pinned in config, never by name
     status: by_design
     source: macula-io/macula (realm trust)

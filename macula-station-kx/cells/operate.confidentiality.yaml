@@ -1,5 +1,5 @@
 id: operate.confidentiality
-status: assumed
+status: assessed
 owner: raf.lefever@erlef.org
 threat:
   definition: 'In normal operation something reads what it should not: a station relays payloads it can decode, a monitoring agent over-collects, or an operational backup exposes records.'
@@ -16,6 +16,9 @@ defense:
   - measure: Sealed calls and streams (E2E seal scheme 1)
     status: by_design
     source: macula-io/macula (13.0.0)
+    evidence:
+    - kind: test
+      ref: macula-io/macula test/macula_call_seal_tests.erl (a_keyed_advertisement_seals_to_its_key_test)
   - measure: Sealed pubsub so stations relay events they cannot read
     status: roadmap
     source: macula-io/macula plans/DESIGN_E2E_SEALED_PUBSUB.md

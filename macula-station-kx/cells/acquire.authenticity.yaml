@@ -1,5 +1,5 @@
 id: acquire.authenticity
-status: assumed
+status: assessed
 owner: raf.lefever@erlef.org
 threat:
   definition: 'The vendor itself cannot be verified: the station cannot tell a genuine vendor artifact from a lookalike, or the vendor''s claimed provenance is unprovable.'
@@ -16,6 +16,9 @@ defense:
   - measure: cosign verification of signature, SBOM and provenance for every image, before anything runs
     status: by_design
     source: macula-ci-images (attest-image.yml)
+    evidence:
+    - kind: test
+      ref: macula-io/mcl-fovea-fleet reconcile/reconcile_test.sh (signer allowlists pin the exact key and repository)
   - measure: Vendor public keys are distributed out of band, not fetched from the vendor's own site alone
     status: org
   recovery:

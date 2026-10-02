@@ -1,5 +1,5 @@
 id: in_motion.accountability
-status: assumed
+status: assessed
 owner: raf.lefever@erlef.org
 threat:
   definition: 'Traffic in flight leaves no attributable trail: who spoke to whom, when, and through which relay is unrecorded, so misuse of the mesh''s transport is invisible.'
@@ -16,6 +16,9 @@ defense:
   - measure: Mesh identities on every signed record make transport abuse attributable
     status: by_design
     source: macula-io/macula (realm identities)
+    evidence:
+    - kind: test
+      ref: macula-io/macula test/macula_frame_envelope_tests.erl (records_travel_as_their_wire_bytes_test)
   - measure: Transport metadata retention for incident response
     status: org
   recovery:

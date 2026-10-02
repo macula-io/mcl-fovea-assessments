@@ -1,5 +1,5 @@
 id: machine_agent.authenticity
-status: assumed
+status: assessed
 owner: raf.lefever@erlef.org
 threat:
   definition: 'An automated system passes itself off as something it is not: a bot signs advertisements with a leaked key, or an agent speaks for an org without a delegation.'
@@ -19,6 +19,9 @@ defense:
   - measure: Ownership proofs (asserted_by) bind a payload to its key holder
     status: by_design
     source: macula-services/mcl-om
+    evidence:
+    - kind: test
+      ref: macula-io/macula test/macula_record_cert_chain_tests.erl (a_certificate_chain_authorization_is_refused_as_an_unsupported_form_test)
   - measure: Delegations expire and are tombstoned on revocation
     status: by_design
     source: macula-io/macula plans/DESIGN_PQ_SIGNED_FRAMES_AND_RECORDS.md

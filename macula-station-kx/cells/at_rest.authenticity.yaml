@@ -1,5 +1,5 @@
 id: at_rest.authenticity
-status: assumed
+status: assessed
 owner: raf.lefever@erlef.org
 threat:
   definition: 'The provenance of stored data is lost or forged: a record''s signer cannot be checked later, or a stored copy is swapped for another''s, so what the station serves is not what was signed.'
@@ -16,6 +16,9 @@ defense:
   - measure: Records are self-authenticating signed objects
     status: by_design
     source: macula-io/macula plans/DESIGN_PQ_SIGNED_FRAMES_AND_RECORDS.md
+    evidence:
+    - kind: test
+      ref: macula-io/macula test/macula_record_cbor_strict_tests.erl (duplicate_key_at_the_top_level_is_refused_test)
   recovery:
   - measure: Re-fetch the authentic copies from peers and expire the forgeries
     status: org

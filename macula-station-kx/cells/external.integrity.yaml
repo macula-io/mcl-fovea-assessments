@@ -1,5 +1,5 @@
 id: external.integrity
-status: assumed
+status: assessed
 owner: raf.lefever@erlef.org
 threat:
   definition: 'An outside party injects or alters what the mesh carries: submits forged records, replays old ones, or poisons a station''s DHT with data that verifies for no one but still occupies slots.'
@@ -19,6 +19,9 @@ defense:
   - measure: Records are signed end to end; stations store and serve bytes they cannot modify
     status: by_design
     source: macula-io/macula plans/DESIGN_PQ_SIGNED_FRAMES_AND_RECORDS.md
+    evidence:
+    - kind: test
+      ref: macula-io/macula test/macula_frame_malformed_tests.erl (parse_received_test_)
   - measure: Frame integrity and the handshake's channel binding make on-path rewriting fail
     status: by_design
     source: macula-io/macula (handshake v5)

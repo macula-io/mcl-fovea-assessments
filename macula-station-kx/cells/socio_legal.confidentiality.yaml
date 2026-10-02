@@ -1,5 +1,5 @@
 id: socio_legal.confidentiality
-status: assumed
+status: assessed
 owner: raf.lefever@erlef.org
 threat:
   definition: 'A lawful or political authority compels disclosure of what the station holds or carries: a subpoena to the provider, a gag order on the operator, or a demand that moves traffic through a hostile jurisdiction.'
@@ -13,6 +13,9 @@ defense:
   - measure: Sealed payloads mean a compelled station or provider yields ciphertext, not content
     status: by_design
     source: macula-io/macula plans/DESIGN_E2E_PAYLOAD_CONFIDENTIALITY.md
+    evidence:
+    - kind: test
+      ref: macula-io/macula test/macula_call_seal_tests.erl (a_keyed_advertisement_seals_to_its_key_test)
   - measure: Jurisdiction choice and provider terms limit exposure to compulsion
     status: org
   recovery:

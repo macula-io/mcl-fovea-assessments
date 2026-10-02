@@ -1,5 +1,5 @@
 id: internal.integrity
-status: assumed
+status: assessed
 owner: raf.lefever@erlef.org
 threat:
   definition: 'Someone inside the operation alters what a station stores or relays: rewrites a DHT record, drops or reorders relayed frames, or changes the station''s configuration so the mesh disagrees with itself.'
@@ -16,6 +16,9 @@ defense:
   - measure: Records are signed objects the station cannot rewrite without the signer's key; verification is offline and key-pinned
     status: by_design
     source: macula-io/macula plans/DESIGN_PQ_SIGNED_FRAMES_AND_RECORDS.md
+    evidence:
+    - kind: test
+      ref: macula-io/macula test/macula_record_cbor_strict_tests.erl (duplicate_key_at_the_top_level_is_refused_test)
   - measure: The fleet reconciler re-applies the signed config and image, overwriting local edits
     status: by_design
     source: macula-io/macula-fleet

@@ -1,5 +1,5 @@
 id: operate.availability
-status: assumed
+status: assessed
 owner: raf.lefever@erlef.org
 threat:
   definition: 'The station loses availability while running: a crash loop, a resource leak, or a software bug takes the listener down and the mesh loses a seed.'
@@ -18,6 +18,9 @@ defense:
   - measure: OTP supervision restarts failed parts without losing the node identity
     status: by_design
     source: macula-io/macula (OTP release)
+    evidence:
+    - kind: test
+      ref: macula-io/macula test/macula_pubsub_system/macula_pubsub_connect_selfheal_tests.erl (connect_watchdog_recycles_wedged_link_test_)
   - measure: Pools hold several pinned seeds and re-dial a dropped station
     status: by_design
     source: macula-io/macula (pool)

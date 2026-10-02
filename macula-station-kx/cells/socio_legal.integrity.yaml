@@ -1,5 +1,5 @@
 id: socio_legal.integrity
-status: assumed
+status: assessed
 owner: raf.lefever@erlef.org
 threat:
   definition: 'Legal or political pressure corrupts the system''s integrity: an authority forces a change to the station''s configuration, a content-removal order compels deletion, or sanctions cut the operator off from updates.'
@@ -16,6 +16,9 @@ defense:
   - measure: Signed records and tombstones make every removal attributable and visible
     status: by_design
     source: macula-io/macula plans/DESIGN_PQ_SIGNED_FRAMES_AND_RECORDS.md
+    evidence:
+    - kind: test
+      ref: macula-io/macula test/macula_record_cbor_strict_tests.erl (duplicate_key_at_the_top_level_is_refused_test)
   - measure: The keeper's public archive records what was removed and when
     status: by_design
     source: macula-io/mcl-fovea-records

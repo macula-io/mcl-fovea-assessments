@@ -1,5 +1,5 @@
 id: acquire.integrity
-status: assumed
+status: assessed
 owner: raf.lefever@erlef.org
 threat:
   definition: 'What arrives from the vendor is not what was ordered: a tampered image in transit, a dependency substituted in a registry, or firmware altered between vendor and datacentre.'
@@ -16,6 +16,9 @@ defense:
   - measure: Everything the box runs is verified by digest and provenance before execution
     status: by_design
     source: macula-ci-images (attest-image.yml)
+    evidence:
+    - kind: test
+      ref: macula-io/mcl-fovea-fleet reconcile/reconcile_test.sh (digest verification against the signers, not the mirror)
   - measure: Trusted vendor channels only; no unsigned downloads
     status: org
   recovery:

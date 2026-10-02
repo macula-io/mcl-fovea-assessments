@@ -1,5 +1,5 @@
 id: external.availability
-status: assumed
+status: assessed
 owner: raf.lefever@erlef.org
 threat:
   definition: 'An outside attacker denies the mesh a station: floods the QUIC port, exhausts the box''s resources, or forces it to spend its verification budget so real clients time out.'
@@ -18,6 +18,9 @@ defense:
   - measure: Slot admission budgets cap what one signer can occupy, so flooding is bounded
     status: by_design
     source: macula-io/macula plans/DESIGN_PQ_DHT_SLOTS_AND_BUDGET.md
+    evidence:
+    - kind: test
+      ref: macula-io/macula test/macula_client_peer_budget_tests.erl (a_new_peer_within_the_budget_is_allowed_test)
   - measure: Six stations spread the load; clients hold several pinned seeds
     status: by_design
     source: macula-io/macula (pool)
