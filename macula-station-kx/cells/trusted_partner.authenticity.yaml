@@ -1,5 +1,5 @@
 id: trusted_partner.authenticity
-status: assumed
+status: assessed
 owner: raf.lefever@erlef.org
 threat:
   definition: 'A trusted third party vouches for something false: a signing authority certifies a key it should not, or a vendor''s signature lands on a release it never built, so the station trusts a counterfeit.'
@@ -19,6 +19,9 @@ defense:
   - measure: Identity claims are checked against pinned keys, never against the certificate alone
     status: by_design
     source: macula-io/macula (pinned node ids)
+    evidence:
+    - kind: test
+      ref: macula-io/mcl-fovea-fleet reconcile/reconcile_test.sh (a tag signed by another key ignored, an unsigned image refused)
   - measure: The org directory and procedure delegation chain binds advertisements to the realm key
     status: by_design
     source: macula-io/macula plans/DESIGN_PQ_DHT_SLOTS_AND_BUDGET.md §2.3

@@ -1,5 +1,5 @@
 id: socio_legal.authenticity
-status: assumed
+status: assessed
 owner: raf.lefever@erlef.org
 threat:
   definition: 'Legal identity is misused or contested: an authority impersonates the operator to issue instructions, a court claims control of the identity, or domain seizure lets someone answer for the station.'
@@ -16,6 +16,9 @@ defense:
   - measure: Addresses are pinned IP literals, not names, in the assessment and client configs
     status: by_design
     source: macula-fovea spec v0.4, 14-instantiation
+    evidence:
+    - kind: test
+      ref: macula-io/macula test/macula_client_pool_keys_tests.erl (link_keys_test_)
   - measure: The realm key is distributed out of band and pinned
     status: by_design
     source: macula-io/macula-realm

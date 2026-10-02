@@ -1,5 +1,5 @@
 id: deliver.authenticity
-status: assumed
+status: assessed
 owner: raf.lefever@erlef.org
 threat:
   definition: 'The box cannot prove what it runs: no attestation ties the running station to the verified image, so a box that was swapped or altered in place goes unnoticed.'
@@ -19,6 +19,9 @@ defense:
   - measure: Every boot applies only a verified tag, and the boot path is owner-only
     status: by_design
     source: macula-io/macula-fleet
+    evidence:
+    - kind: test
+      ref: macula-io/macula test/macula_quic_dial_verification_tests.erl (dial_verification_test_)
   - measure: Remote attestation of station boxes in the fleet
     status: roadmap
     source: macula-io/macula plans/DESIGN_PQ_SIGNED_FRAMES_AND_RECORDS.md

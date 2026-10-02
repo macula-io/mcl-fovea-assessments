@@ -1,5 +1,5 @@
 id: temporal.integrity
-status: assumed
+status: assessed
 owner: raf.lefever@erlef.org
 threat:
   definition: 'Time erodes what the station depends on for correctness: certificates and endorsements expire un-renewed, records outlive their validity, and keys age past their rotation date.'
@@ -19,6 +19,9 @@ defense:
   - measure: Bounded validity windows on every signed object
     status: by_design
     source: macula-io/macula plans/DESIGN_PQ_SIGNED_FRAMES_AND_RECORDS.md
+    evidence:
+    - kind: test
+      ref: macula-io/macula test/macula_record_refresh_bound_tests.erl (a_bound_is_not_pushed_out_by_the_records_age_test)
   - measure: A rotation calendar with review_by dates enforced by lint
     status: by_design
     source: macula-io/macula-fovea

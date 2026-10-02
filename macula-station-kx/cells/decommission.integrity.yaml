@@ -1,5 +1,5 @@
 id: decommission.integrity
-status: assumed
+status: assessed
 owner: raf.lefever@erlef.org
 threat:
   definition: 'Decommissioning corrupts the mesh''s history or state: records served by a retired station vanish without expiry, or a station is removed in a way that forks the record set.'
@@ -16,6 +16,9 @@ defense:
   - measure: Records live on several stations with expiry, so no single retirement loses them
     status: by_design
     source: macula-io/macula (DHT replication)
+    evidence:
+    - kind: test
+      ref: macula-io/macula test/macula_dht_records_tests.erl (dht_records_test_)
   - measure: Decommissioning publishes the tombstones before the box is taken down
     status: org
   recovery:

@@ -1,5 +1,5 @@
 id: deliver.integrity
-status: assumed
+status: assessed
 owner: raf.lefever@erlef.org
 threat:
   definition: 'What the box runs is altered between build and boot: a floating tag moves, a config file is edited on the box, or an update is applied that was never verified.'
@@ -22,6 +22,9 @@ defense:
   - measure: Only the reconciler writes the box's managed files
     status: by_design
     source: macula-io/macula-fleet
+    evidence:
+    - kind: test
+      ref: macula-io/mcl-fovea-fleet reconcile/reconcile_test.sh (every digest verified before the box runs it)
   recovery:
   - measure: Re-run the reconciler from the last signed tag; it never rolls back, so a revert is a new signed release
     status: org

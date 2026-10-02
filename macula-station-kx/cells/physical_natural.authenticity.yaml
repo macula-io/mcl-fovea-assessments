@@ -1,5 +1,5 @@
 id: physical_natural.authenticity
-status: assumed
+status: assessed
 owner: raf.lefever@erlef.org
 threat:
   definition: 'Seized or salvaged hardware is made to speak for the station: a box taken in a raid, a discarded disk, or a replaced server is used to answer as the station.'
@@ -16,6 +16,9 @@ defense:
   - measure: The identity key never leaves the box's protected volume
     status: by_design
     source: macula-services/mcl-om (/etc/mcl/secrets)
+    evidence:
+    - kind: test
+      ref: macula-services/mcl-fovea apps/observe_claims/native (a_station_without_an_ml_dsa_key_is_never_accepted)
   - measure: Physical decommissioning wipes and certificates of destruction
     status: org
   recovery:

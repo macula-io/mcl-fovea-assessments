@@ -1,5 +1,5 @@
 id: operate.authenticity
-status: assumed
+status: assessed
 owner: raf.lefever@erlef.org
 threat:
   definition: 'At runtime the station answers as something it is not, or something else answers as the station: identity drifts, an address is taken over, or a session is hijacked mid-flight.'
@@ -19,6 +19,9 @@ defense:
   - measure: Handshake v5 binds the session to its TLS channel
     status: by_design
     source: macula-io/macula (handshake v5)
+    evidence:
+    - kind: test
+      ref: macula-io/macula test/macula_quic_connection_leaf_tests.erl (connection_leaf_test_)
   - measure: One address, one node id, pinned in every peer's config
     status: by_design
     source: macula-io/macula-fleet

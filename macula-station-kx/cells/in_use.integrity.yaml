@@ -1,5 +1,5 @@
 id: in_use.integrity
-status: assumed
+status: assessed
 owner: raf.lefever@erlef.org
 threat:
   definition: 'Computation corrupts what it handles: a memory error flips a bit during verification, a race condition mishandles a record, or hardware faults produce wrong results that get stored.'
@@ -16,6 +16,9 @@ defense:
   - measure: Deterministic CBOR and atomic writes bound what a fault can corrupt
     status: by_design
     source: macula-io/macula (deterministic CBOR)
+    evidence:
+    - kind: test
+      ref: macula-io/macula test/macula_record_cbor_tests.erl (uint_roundtrip_test_)
   - measure: ECC memory and healthy hardware on station boxes
     status: org
   recovery:

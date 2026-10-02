@@ -1,5 +1,5 @@
 id: temporal.confidentiality
-status: assumed
+status: assessed
 owner: raf.lefever@erlef.org
 threat:
   definition: 'Time breaks the station''s secrecy: harvest-now-decrypt-later capture of sealed payloads and hybrid keys, and the aging of the classical components that back the post-quantum primitives.'
@@ -16,6 +16,9 @@ defense:
   - measure: Post-quantum-only key exchange (ML-KEM hybrid) and ML-DSA-87 identities
     status: by_design
     source: macula-io/macula-pqc
+    evidence:
+    - kind: test
+      ref: macula-io/macula test/macula_quic_pq_kx_tests.erl (pq_kx_test_)
   - measure: E2E seal scheme 1 rests on ML-KEM-1024 even where a classical half is present
     status: by_design
     source: macula-io/macula plans/DESIGN_E2E_PAYLOAD_CONFIDENTIALITY.md

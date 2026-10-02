@@ -1,5 +1,5 @@
 id: machine_agent.availability
-status: assumed
+status: assessed
 owner: raf.lefever@erlef.org
 threat:
   definition: 'Automated clients, friendly or hostile, starve the station: runaway reconnects, aggressive polling or a broken SDK loop holds the listener busy so real traffic queues behind it.'
@@ -18,6 +18,9 @@ defense:
   - measure: Per-slot and per-class budgets bound what any signer can occupy
     status: by_design
     source: macula-io/macula plans/DESIGN_PQ_DHT_SLOTS_AND_BUDGET.md
+    evidence:
+    - kind: test
+      ref: macula-io/macula test/macula_quic_send_backpressure_tests.erl (receive_window_option_test)
   - measure: QUIC's built-in flow control sheds overload at the transport
     status: by_design
     source: macula-io/macula (QUIC transport)

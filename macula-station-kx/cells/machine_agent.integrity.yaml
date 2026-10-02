@@ -1,5 +1,5 @@
 id: machine_agent.integrity
-status: assumed
+status: assessed
 owner: raf.lefever@erlef.org
 threat:
   definition: 'Automation writes bad state at machine scale: a misfiring reconciler, a broken CI job or an agentic process pushes a change that corrupts station config or floods the DHT with junk.'
@@ -19,6 +19,9 @@ defense:
   - measure: Release tags signed by a human gate automated changes
     status: by_design
     source: macula-io/macula-fleet
+    evidence:
+    - kind: test
+      ref: macula-io/mcl-fovea-fleet reconcile/reconcile_test.sh (non-canonical units refused)
   - measure: Rate and budget bounds stop one process from monopolizing slots
     status: by_design
     source: macula-io/macula plans/DESIGN_PQ_DHT_SLOTS_AND_BUDGET.md

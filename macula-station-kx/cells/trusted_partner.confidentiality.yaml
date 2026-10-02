@@ -1,5 +1,5 @@
 id: trusted_partner.confidentiality
-status: assumed
+status: assessed
 owner: raf.lefever@erlef.org
 threat:
   definition: A vendor or dependency the station trusts — the QUIC stack, a container image, the VPS provider, a signing authority — uses that trust to read what passes through the station.
@@ -19,6 +19,9 @@ defense:
   - measure: 'Sealed calls and streams: the provider''s KEM key, not the station''s, decrypts payloads'
     status: by_design
     source: macula-io/macula plans/DESIGN_E2E_PAYLOAD_CONFIDENTIALITY.md
+    evidence:
+    - kind: test
+      ref: macula-io/macula test/macula_call_seal_tests.erl (a_keyed_advertisement_seals_to_its_key_test)
   - measure: Images and their SBOMs are verified by digest before deployment
     status: by_design
     source: macula-ci-images (attest-image.yml)

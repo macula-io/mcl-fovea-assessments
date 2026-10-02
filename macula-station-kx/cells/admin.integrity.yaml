@@ -1,5 +1,5 @@
 id: admin.integrity
-status: assumed
+status: assessed
 owner: raf.lefever@erlef.org
 threat:
   definition: 'Administration corrupts trust state: a botched key rotation, a revoked record that stays live, or a config change that weakens the station''s posture silently.'
@@ -19,6 +19,9 @@ defense:
   - measure: Changes go through reviewed signed releases, never hand edits
     status: by_design
     source: macula-io/macula-fleet
+    evidence:
+    - kind: test
+      ref: macula-io/macula-realm apps/project_realm/test/project_realm/realm_membership_revoked_v1_to_realm_members_test.exs
   - measure: Key rotation ceremonies are scripted and rehearsed
     status: org
   recovery:
