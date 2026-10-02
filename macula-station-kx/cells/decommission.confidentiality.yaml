@@ -1,0 +1,21 @@
+id: decommission.confidentiality
+status: assumed
+owner: raf.lefever@erlef.org
+threat:
+  definition: 'A retired station leaks what it held: keys, records and configs survive on decommissioned hardware and disks that leave the operator''s control.'
+  manifestations:
+  - A VPS is terminated without wiping its disk
+  - A decommissioned box is resold with the identity key intact
+  - Backups of a retired station are kept forever
+defense:
+  detection:
+  - measure: Inventory of what each box holds, checked against a decommissioning checklist
+    status: org
+  countermeasures:
+  - measure: The identity key is the only secret that matters; decommissioning wipes it before the disk leaves control
+    status: org
+  - measure: Provider disks are encrypted or destroyed on termination
+    status: org
+  recovery:
+  - measure: 'Treat a lost decommissioned disk as key compromise: rotate and revoke'
+    status: org

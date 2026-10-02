@@ -1,0 +1,23 @@
+id: in_use.confidentiality
+status: assumed
+owner: raf.lefever@erlef.org
+threat:
+  definition: While the station processes data — decrypting handshakes, verifying records, relaying frames — an observer on the box or beside it reads the plaintext in memory or through side channels.
+  manifestations:
+  - A memory dump of the station process exposes decrypted frames
+  - A co-tenant on the VPS host reads the station's memory through a hypervisor flaw
+  - Timing side channels leak which records are being verified
+defense:
+  detection:
+  - measure: The E2E seal design lists what a station sees in use (§9) and bounds it
+    status: by_design
+    source: macula-io/macula plans/DESIGN_E2E_PAYLOAD_CONFIDENTIALITY.md §9
+  countermeasures:
+  - measure: Sealed payloads are decrypted only at the endpoints, never by the station
+    status: by_design
+    source: macula-io/macula plans/DESIGN_E2E_PAYLOAD_CONFIDENTIALITY.md
+  - measure: Dedicated VPS instances, not shared tenancy, for fleet stations
+    status: org
+  recovery:
+  - measure: Rotate keys whose plaintext may have been read
+    status: org

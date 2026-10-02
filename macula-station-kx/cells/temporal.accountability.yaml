@@ -1,0 +1,24 @@
+id: temporal.accountability
+status: assumed
+owner: raf.lefever@erlef.org
+threat:
+  definition: 'Time obscures responsibility: review dates pass unobserved, retention obligations collide with secrecy, and nobody can say who was accountable for a decision years later.'
+  manifestations:
+  - A cell's review_by date passes with no review
+  - A retention obligation is discovered after its deadline
+  - The person accountable for an old decision is untraceable
+defense:
+  detection:
+  - measure: fovea lint and the scorecard surface overdue review_by dates
+    status: by_design
+    source: macula-io/macula-fovea
+  countermeasures:
+  - measure: Named owners and review_by dates on every cell, enforced mechanically
+    status: by_design
+    source: macula-io/macula-fovea
+  - measure: Records and their keepers preserve the history of what was signed when
+    status: by_design
+    source: macula-io/mcl-fovea-records
+  recovery:
+  - measure: Run the overdue reviews, reassign owners, document the gap
+    status: org

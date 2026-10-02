@@ -1,0 +1,27 @@
+id: machine_agent.authenticity
+status: assumed
+owner: raf.lefever@erlef.org
+threat:
+  definition: 'An automated system passes itself off as something it is not: a bot signs advertisements with a leaked key, or an agent speaks for an org without a delegation.'
+  manifestations:
+  - A leaked service key lets a bot advertise procedures under an org's namespace
+  - A scraped endorsement is replayed by automation to join a gated overlay
+  - An agent impersonates a user's device in a realm join request
+defense:
+  detection:
+  - measure: Org-namespaced advertisements must chain to the org directory and delegation the realm signed
+    status: by_design
+    source: macula-io/macula plans/DESIGN_PQ_DHT_SLOTS_AND_BUDGET.md §2.3
+  - measure: Realm proofs bind each join request to the key that made it
+    status: by_design
+    source: macula-io/macula-realm (realm proof v2)
+  countermeasures:
+  - measure: Ownership proofs (asserted_by) bind a payload to its key holder
+    status: by_design
+    source: macula-services/mcl-om
+  - measure: Delegations expire and are tombstoned on revocation
+    status: by_design
+    source: macula-io/macula plans/DESIGN_PQ_SIGNED_FRAMES_AND_RECORDS.md
+  recovery:
+  - measure: Revoke the delegation, tombstone the endorsement, rotate the key
+    status: org

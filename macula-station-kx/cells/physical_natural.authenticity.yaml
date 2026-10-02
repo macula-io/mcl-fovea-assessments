@@ -1,0 +1,23 @@
+id: physical_natural.authenticity
+status: assumed
+owner: raf.lefever@erlef.org
+threat:
+  definition: 'Seized or salvaged hardware is made to speak for the station: a box taken in a raid, a discarded disk, or a replaced server is used to answer as the station.'
+  manifestations:
+  - Kinetic seizure of the box by an authority or thief
+  - A discarded disk with the identity key is recovered and used
+  - A provider swaps the server and the old one resurfaces
+defense:
+  detection:
+  - measure: The observer's probe only counts a handshake when the station proves the declared node id; a duplicate cannot fake it without the key
+    status: by_design
+    source: macula-services/mcl-fovea
+  countermeasures:
+  - measure: The identity key never leaves the box's protected volume
+    status: by_design
+    source: macula-services/mcl-om (/etc/mcl/secrets)
+  - measure: Physical decommissioning wipes and certificates of destruction
+    status: org
+  recovery:
+  - measure: Rotate the key, tombstone the old identity, re-pin clients
+    status: org

@@ -1,0 +1,23 @@
+id: create.accountability
+status: assumed
+owner: raf.lefever@erlef.org
+threat:
+  definition: 'Build history is opaque: nobody can say who changed what, when, and which tests ran against the artifact now in production.'
+  manifestations:
+  - A critical patch lands with a misleading commit message
+  - The artifact in production cannot be traced to a commit
+  - Test results for the exact deployed digest are not retained
+defense:
+  detection:
+  - measure: Git history and PR review records attribute every change
+    status: org
+  - measure: SLSA provenance ties each artifact to its workflow run and repository
+    status: by_design
+    source: macula-ci-images (attest-image.yml)
+  countermeasures:
+  - measure: The image label org.opencontainers.image.source links every artifact to its repository
+    status: by_design
+    source: macula-services/mcl-fovea (Containerfile label)
+  recovery:
+  - measure: Reconstruct the chain from git log to attestation to deployed digest
+    status: org

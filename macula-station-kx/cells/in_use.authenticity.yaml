@@ -1,0 +1,24 @@
+id: in_use.authenticity
+status: assumed
+owner: raf.lefever@erlef.org
+threat:
+  definition: 'What the station computes on is not what it appears to be: a hijacked process, an injected library, or a swapped binary performs the signing and verification on the station''s behalf.'
+  manifestations:
+  - A compromised library inside the release signs with the station's key
+  - An attacker with code execution replaces the verification code with one that accepts anything
+  - A debugger attaches to the live station and drives its signer
+defense:
+  detection:
+  - measure: The observer's outside-in probe catches a station that accepts what the declaration forbids
+    status: by_design
+    source: macula-services/mcl-fovea
+  countermeasures:
+  - measure: The release runs from a verified, digest-pinned image
+    status: by_design
+    source: macula-io/macula-fleet
+  - measure: Runtime attestation of the running station
+    status: roadmap
+  recovery:
+  - measure: Re-image from the verified tag and rotate the key
+    status: org
+review_by: '2027-09-30'

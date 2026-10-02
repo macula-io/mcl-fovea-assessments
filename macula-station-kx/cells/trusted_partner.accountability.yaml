@@ -1,0 +1,27 @@
+id: trusted_partner.accountability
+status: assumed
+owner: raf.lefever@erlef.org
+threat:
+  definition: When a partner's component misbehaves, nothing records which partner, which version and which trust decision was in force, so blame cannot be assigned and the fix cannot be scoped.
+  manifestations:
+  - Two vendors' images are deployed with no record of which box ran which digest
+  - A trust decision (adding a signer) is made without an attributable record
+  - Dependency versions drift across boxes with no manifest
+defense:
+  detection:
+  - measure: The fleet records the digest every box applied, with the tag and signer
+    status: by_design
+    source: macula-io/macula-fleet
+  - measure: SBOMs attach a bill of materials to every image, so a vulnerable component is nameable
+    status: by_design
+    source: macula-ci-images (attest-image.yml)
+  countermeasures:
+  - measure: Signer allowlists are committed and reviewed
+    status: org
+  - measure: A pinned component manifest names each dependency by digest
+    status: roadmap
+    source: macula-services/mcl-fovea plans/PLAN_FOVEA_STRATEGY.md (phase 4)
+  recovery:
+  - measure: After an incident, map the affected boxes from the applied-digest records and rebuild only those
+    status: org
+review_by: '2027-06-30'

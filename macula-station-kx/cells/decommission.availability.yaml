@@ -1,0 +1,23 @@
+id: decommission.availability
+status: assumed
+owner: raf.lefever@erlef.org
+threat:
+  definition: 'Taking a station out of service removes availability the mesh still needs: the station is retired while peers still rely on it, and the mesh loses capacity it has not replaced.'
+  manifestations:
+  - A station is retired without first moving its pinned seeds elsewhere
+  - The mesh runs too few stations to tolerate the next failure
+  - Clients pinned to the retired station cannot reach the mesh
+defense:
+  detection:
+  - measure: Client pools notice a pinned seed that stops answering and re-dial others
+    status: by_design
+    source: macula-io/macula (pool)
+  - measure: The observer's rounds over the retired station turn unknown, visibly
+    status: by_design
+    source: macula-services/mcl-fovea
+  countermeasures:
+  - measure: A replacement station is up and advertised before the old one is retired
+    status: org
+  recovery:
+  - measure: Un-retire or restore the station; re-point clients to live seeds
+    status: org

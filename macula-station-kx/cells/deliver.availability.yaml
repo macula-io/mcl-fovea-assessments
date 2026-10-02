@@ -1,0 +1,24 @@
+id: deliver.availability
+status: assumed
+owner: raf.lefever@erlef.org
+threat:
+  definition: 'The station cannot be delivered or updated at all: the registry or git host is down, the deploy key breaks, or the box''s update path fails during an incident.'
+  manifestations:
+  - The registry is unreachable exactly when a fix must go out
+  - A deploy key expires and the box stops fetching releases
+  - A rollout fails midway and the box is left in a half state
+defense:
+  detection:
+  - measure: The reconciler's runs and refusals are journaled; a failing unit shows in systemctl --failed
+    status: by_design
+    source: macula-io/macula-fleet
+  countermeasures:
+  - measure: The box keeps running its current image when an update cannot be verified; it never stops to wait
+    status: by_design
+    source: macula-io/macula-fleet
+  - measure: An update that failed midway is completed by the next run
+    status: by_design
+    source: macula-io/macula-fleet
+  recovery:
+  - measure: Fix the transport (key, network, registry) and let the reconciler finish
+    status: org

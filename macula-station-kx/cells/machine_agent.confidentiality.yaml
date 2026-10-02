@@ -1,0 +1,26 @@
+id: machine_agent.confidentiality
+status: assumed
+owner: raf.lefever@erlef.org
+threat:
+  definition: An automated process — a scraper, a worm, or an agent running with credentials it should not have — reads what a station exposes, at a scale and speed no human attacker matches.
+  manifestations:
+  - A crawler harvests every public record the DHT serves
+  - An agent with a leaked service token queries records its scope does not cover
+  - A botnet tests the station for exposed endpoints around the clock
+defense:
+  detection:
+  - measure: The observer's rounds would catch a widened listener surface; rate anomalies show in station metrics
+    status: org
+  - measure: mcl-warden/sentinel detect brute-force automation on public boxes
+    status: roadmap
+    source: macula-services/mcl-warden
+  countermeasures:
+  - measure: Slot budgets cap what automated harvesting can pull per slot
+    status: by_design
+    source: macula-io/macula plans/DESIGN_PQ_DHT_SLOTS_AND_BUDGET.md
+  - measure: Agent credentials are scoped tokens with their own limits, not the station's keys
+    status: org
+  recovery:
+  - measure: Rotate the leaked token and audit what the agent read
+    status: org
+review_by: '2027-03-31'

@@ -1,0 +1,27 @@
+id: machine_agent.integrity
+status: assumed
+owner: raf.lefever@erlef.org
+threat:
+  definition: 'Automation writes bad state at machine scale: a misfiring reconciler, a broken CI job or an agentic process pushes a change that corrupts station config or floods the DHT with junk.'
+  manifestations:
+  - A CI pipeline pushes a config typo to every box in one run
+  - An agent edits the realm's records through an API nobody supervises
+  - A stuck reconciler loop restarts a station repeatedly mid-handshake
+defense:
+  detection:
+  - measure: The fleet reconciler refuses non-canonical units and any image without provenance
+    status: by_design
+    source: macula-io/macula-fleet
+  - measure: fovea lint in CI refuses an assessment or config that fails its schema
+    status: by_design
+    source: macula-io/macula-fovea
+  countermeasures:
+  - measure: Release tags signed by a human gate automated changes
+    status: by_design
+    source: macula-io/macula-fleet
+  - measure: Rate and budget bounds stop one process from monopolizing slots
+    status: by_design
+    source: macula-io/macula plans/DESIGN_PQ_DHT_SLOTS_AND_BUDGET.md
+  recovery:
+  - measure: Roll back to the last signed tag; the reconciler refuses an older tag, so a rollback is a new signed release
+    status: org

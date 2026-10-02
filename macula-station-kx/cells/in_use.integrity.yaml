@@ -1,0 +1,23 @@
+id: in_use.integrity
+status: assumed
+owner: raf.lefever@erlef.org
+threat:
+  definition: 'Computation corrupts what it handles: a memory error flips a bit during verification, a race condition mishandles a record, or hardware faults produce wrong results that get stored.'
+  manifestations:
+  - A bit flip in RAM during signing produces a record that fails later
+  - A race between writers stores one record over another
+  - ECC-less hardware corrupts long-lived in-memory state
+defense:
+  detection:
+  - measure: Verification before storage and on read catches corruption produced in use
+    status: by_design
+    source: macula-io/macula plans/DESIGN_PQ_SIGNED_FRAMES_AND_RECORDS.md
+  countermeasures:
+  - measure: Deterministic CBOR and atomic writes bound what a fault can corrupt
+    status: by_design
+    source: macula-io/macula (deterministic CBOR)
+  - measure: ECC memory and healthy hardware on station boxes
+    status: org
+  recovery:
+  - measure: Detect via verification, discard the corrupt state, recompute or re-fetch
+    status: org

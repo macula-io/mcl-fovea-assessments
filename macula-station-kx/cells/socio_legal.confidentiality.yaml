@@ -1,0 +1,21 @@
+id: socio_legal.confidentiality
+status: assumed
+owner: raf.lefever@erlef.org
+threat:
+  definition: 'A lawful or political authority compels disclosure of what the station holds or carries: a subpoena to the provider, a gag order on the operator, or a demand that moves traffic through a hostile jurisdiction.'
+  manifestations:
+  - The provider is subpoenaed for the box's disk image
+  - The operator is ordered to hand over the identity key under a gag order
+  - A jurisdiction demands traffic interception at the network layer
+defense:
+  detection: []
+  countermeasures:
+  - measure: Sealed payloads mean a compelled station or provider yields ciphertext, not content
+    status: by_design
+    source: macula-io/macula plans/DESIGN_E2E_PAYLOAD_CONFIDENTIALITY.md
+  - measure: Jurisdiction choice and provider terms limit exposure to compulsion
+    status: org
+  recovery:
+  - measure: Rotate keys after any compelled disclosure; publish what the law permits
+    status: org
+na_reason: 'Detection is structurally impossible here: a subpoena with a gag order is, by design, unknown to the operator until it is public, and network-layer interception ordered by an authority leaves no guest-side trace. No monitoring on the box can see it, which is why this cell carries no detection measure.'

@@ -1,0 +1,22 @@
+id: socio_legal.accountability
+status: assumed
+owner: raf.lefever@erlef.org
+threat:
+  definition: 'Legal actions against the system cannot be tracked or answered: demands arrive without a record, obligations (retention, disclosure) are unmet, and the operator cannot show what it did and why.'
+  manifestations:
+  - A subpoena arrives with no process to log or answer it
+  - Retention obligations expire unfulfilled
+  - The operator cannot prove to a regulator what was disclosed and when
+defense:
+  detection:
+  - measure: A legal-request log records every demand and its disposition
+    status: org
+  countermeasures:
+  - measure: A documented response process with counsel for every jurisdiction the stations touch
+    status: org
+  - measure: The public records archive shows what was published, an independent account for regulators
+    status: by_design
+    source: macula-io/mcl-fovea-records
+  recovery:
+  - measure: Reconstruct the demand history from the log and answer outstanding obligations
+    status: org

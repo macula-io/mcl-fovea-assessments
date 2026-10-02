@@ -1,0 +1,24 @@
+id: create.availability
+status: assumed
+owner: raf.lefever@erlef.org
+threat:
+  definition: 'The build pipeline fails or is blocked, so a security fix cannot be built, signed and shipped: CI is down, the builder image cannot be pulled, or a signing key is unavailable.'
+  manifestations:
+  - CI runners are exhausted during an incident
+  - The pinned builder image is pulled from a registry that is unreachable
+  - The release signer is away and a fix cannot be signed
+defense:
+  detection:
+  - measure: CI status and release checks surface a stalled pipeline
+    status: org
+  countermeasures:
+  - measure: The builder image is digest-pinned and cached; building needs nothing but podman or docker
+    status: by_design
+    source: macula-ci-images
+  - measure: A second signer and a documented signing path
+    status: roadmap
+    source: macula-io/macula-fleet (allowed_signers)
+  recovery:
+  - measure: Rebuild on a fresh runner from the cached pinned images
+    status: org
+review_by: '2027-03-31'

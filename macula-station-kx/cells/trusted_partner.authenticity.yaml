@@ -1,0 +1,27 @@
+id: trusted_partner.authenticity
+status: assumed
+owner: raf.lefever@erlef.org
+threat:
+  definition: 'A trusted third party vouches for something false: a signing authority certifies a key it should not, or a vendor''s signature lands on a release it never built, so the station trusts a counterfeit.'
+  manifestations:
+  - A compromised vendor signing key signs a malicious station image
+  - A CA mis-issues a certificate for the station's address
+  - A forged SBOM claims provenance a build never had
+defense:
+  detection:
+  - measure: The reconciler's signer allowlist ties each image to a named repository and its CI workflow
+    status: by_design
+    source: macula-ci-images (attest-image.yml)
+  - measure: The observer's probe refuses a handshake the station's own key does not authenticate
+    status: by_design
+    source: macula-services/mcl-fovea
+  countermeasures:
+  - measure: Identity claims are checked against pinned keys, never against the certificate alone
+    status: by_design
+    source: macula-io/macula (pinned node ids)
+  - measure: The org directory and procedure delegation chain binds advertisements to the realm key
+    status: by_design
+    source: macula-io/macula plans/DESIGN_PQ_DHT_SLOTS_AND_BUDGET.md §2.3
+  recovery:
+  - measure: Revoke the mis-issued signature and re-sign from a clean key
+    status: org

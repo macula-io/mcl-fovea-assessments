@@ -1,0 +1,23 @@
+id: create.integrity
+status: assumed
+owner: raf.lefever@erlef.org
+threat:
+  definition: 'The build itself is corrupted: a poisoned toolchain, a modified CI workflow, or a bad merge ships code that differs from what was reviewed.'
+  manifestations:
+  - A dependency resolution picks a malicious version of the QUIC stack
+  - A CI workflow is edited to inject a step nobody reviewed
+  - A merge conflict resolves to code that drops a security check
+defense:
+  detection:
+  - measure: Every merged change passes the project's lint, xref, dialyzer and test gates in the pinned builder image
+    status: by_design
+    source: macula-io/macula (CI)
+  countermeasures:
+  - measure: Dependencies are pinned and lockfiles are committed
+    status: by_design
+    source: macula-io/macula (lockfiles)
+  - measure: Reviewed PRs only; protected branches
+    status: org
+  recovery:
+  - measure: Revert the poisoned change, rebuild from the last verified commit
+    status: org

@@ -1,0 +1,24 @@
+id: create.authenticity
+status: assumed
+owner: raf.lefever@erlef.org
+threat:
+  definition: 'The provenance of what was built cannot be trusted: the release is not verifiably the CI''s output, so a signed artifact could have been swapped anywhere between build and deploy.'
+  manifestations:
+  - An image tag is moved to point at a different digest than the tested build
+  - A release tarball is replaced on a mirror
+  - The signing job signs an artifact from the wrong commit
+defense:
+  detection:
+  - measure: Every image carries a cosign signature, SPDX SBOM and SLSA provenance bound to its digest
+    status: by_design
+    source: macula-ci-images (attest-image.yml)
+  countermeasures:
+  - measure: Deployments follow digests, not floating tags; a moved tag changes nothing a box runs
+    status: by_design
+    source: macula-io/macula-fleet
+  - measure: Release tags are signed by the maintainer's key
+    status: by_design
+    source: macula-io/macula-fleet (allowed_signers)
+  recovery:
+  - measure: Re-sign the correct artifact and re-verify the fleet
+    status: org

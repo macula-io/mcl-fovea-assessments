@@ -1,0 +1,24 @@
+id: socio_legal.authenticity
+status: assumed
+owner: raf.lefever@erlef.org
+threat:
+  definition: 'Legal identity is misused or contested: an authority impersonates the operator to issue instructions, a court claims control of the identity, or domain seizure lets someone answer for the station.'
+  manifestations:
+  - A seized domain points the station's name elsewhere
+  - An impersonating authority instructs the provider to transfer the box
+  - A court order transfers control of the signing keys
+defense:
+  detection:
+  - measure: Peers trust the node id and the realm key, not the domain name; a seized name changes nothing a verifier accepts
+    status: by_design
+    source: macula-io/macula (pinned ids)
+  countermeasures:
+  - measure: Addresses are pinned IP literals, not names, in the assessment and client configs
+    status: by_design
+    source: macula-fovea spec v0.4, 14-instantiation
+  - measure: The realm key is distributed out of band and pinned
+    status: by_design
+    source: macula-io/macula-realm
+  recovery:
+  - measure: Re-publish the identity from a surviving signer; re-pin peers
+    status: org

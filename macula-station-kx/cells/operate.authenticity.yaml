@@ -1,0 +1,27 @@
+id: operate.authenticity
+status: assumed
+owner: raf.lefever@erlef.org
+threat:
+  definition: 'At runtime the station answers as something it is not, or something else answers as the station: identity drifts, an address is taken over, or a session is hijacked mid-flight.'
+  manifestations:
+  - The station's address moves to another box that cannot prove the node id
+  - A session established with the station is hijacked after the handshake
+  - A misconfigured second node serves the same namespace
+defense:
+  detection:
+  - measure: Every client checks the station's handshake challenge against the pinned node id
+    status: by_design
+    source: macula-io/macula (handshake challenge)
+  - measure: The observer counts a handshake only when the station proves its identity
+    status: by_design
+    source: macula-services/mcl-fovea
+  countermeasures:
+  - measure: Handshake v5 binds the session to its TLS channel
+    status: by_design
+    source: macula-io/macula (handshake v5)
+  - measure: One address, one node id, pinned in every peer's config
+    status: by_design
+    source: macula-io/macula-fleet
+  recovery:
+  - measure: Restore the address, rotate the key if it was exposed, re-pin clients
+    status: org

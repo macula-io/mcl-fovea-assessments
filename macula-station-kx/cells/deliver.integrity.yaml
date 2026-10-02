@@ -1,0 +1,28 @@
+id: deliver.integrity
+status: assumed
+owner: raf.lefever@erlef.org
+threat:
+  definition: 'What the box runs is altered between build and boot: a floating tag moves, a config file is edited on the box, or an update is applied that was never verified.'
+  manifestations:
+  - A station image tag is retagged to a new digest overnight
+  - An operator hand-edits a config the fleet manages
+  - A partial update leaves the box running a mix of old and new files
+defense:
+  detection:
+  - measure: The reconciler verifies every digest before the box runs it, on every run
+    status: by_design
+    source: macula-io/macula-fleet (enforce)
+  - measure: A box that does not run the verified image or config is reported and refused
+    status: by_design
+    source: macula-io/macula-fleet
+  countermeasures:
+  - measure: Digest-pinned images everywhere; floating main tags are ended
+    status: roadmap
+    source: macula-services/mcl-fovea plans/PLAN_FOVEA_STRATEGY.md (phase 4)
+  - measure: Only the reconciler writes the box's managed files
+    status: by_design
+    source: macula-io/macula-fleet
+  recovery:
+  - measure: Re-run the reconciler from the last signed tag; it never rolls back, so a revert is a new signed release
+    status: org
+review_by: '2027-03-31'

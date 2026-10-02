@@ -1,0 +1,22 @@
+id: at_rest.availability
+status: assumed
+owner: raf.lefever@erlef.org
+threat:
+  definition: 'The station''s storage fails or fills, taking the station down or costing it the state it needs to run: disk exhaustion, a failed volume, or a lost identity key.'
+  manifestations:
+  - The data volume fills and the station cannot write
+  - The disk fails and the identity key is lost
+  - A snapshot restore returns the station to an old state
+defense:
+  detection:
+  - measure: Box monitoring watches disk usage and volume health
+    status: org
+  countermeasures:
+  - measure: The identity key volume is backed up and restorable
+    status: org
+  - measure: A station's only irreplaceable persistent state is its identity key
+    status: by_design
+    source: macula-io/macula (station state)
+  recovery:
+  - measure: Restore the volume or re-enroll; the DHT re-fills from peers
+    status: org

@@ -1,41 +1,67 @@
-# The first claim mcl-fovea observes: a macula station accepts only
-# post-quantum key exchange (macula-fovea spec v0.4).
-#
-# NOT GRID-COMPLETE, on purpose: this assessment exists to declare one claim
-# and have it observed, so it holds the one cell that claim lives in
-# (in_motion.confidentiality). `fovea lint` reports the other 79 cells of the
-# grid as missing (grid_missing_cell); that is known, and no other finding is.
-fovea: "0.4"
+fovea: '0.4'
 system: macula-station-kx
-assessment_date: 2026-09-29
+assessment_date: '2026-10-02'
 owner: raf.lefever@erlef.org
-description: >-
-  Whether a macula station completes a key exchange only on the post-quantum
-  groups it offers, observed from outside by mcl-fovea.
+description: 'The macula station system of the io.macula fleet: the six public stations, the software they run (station OTP release, QUIC listener, DHT record store, pubsub and RPC relay, mesh pool), their node identity keys, their configuration and their build-and-delivery path (macula-fleet). Grid-complete under macula-fovea spec v0.4: every one of the 80 cells is answered, assumed, on roadmap, or justified not applicable. One claim, kx_post_quantum_only, is declared with probe evidence and observed live by mcl-fovea; the other cells are drafted from the repositories and the design documents they cite, and are marked assumed until each one gains executable evidence. Drafted with model assistance; the named owner signs what ships.'
+scope:
+  in:
+  - 'the six io.macula fleet stations and the software they run: the station OTP release, its QUIC listener, DHT record store, pubsub and RPC relay, and mesh pool'
+  - 'each station''s node identity key: generation, storage, use, rotation and revocation'
+  - 'the records the stations store and serve: node records, procedure advertisements, realm member endorsements, realm directories and stations lists, content announcements, foundation records, and tombstones'
+  - 'the station''s configuration, image, build and delivery path: macula-io/macula, macula-pqc, macula-ci-images, macula-fleet, and the box each station runs on'
+  - 'the realm trust the stations rely on: the io.macula realm key, the foundation trust list, endorsements and their windows'
+  out:
+  - 'the realm''s own governance and its CA ceremony: who may join io.macula and how its key is guarded (the macula-mesh-realm assessment)'
+  - the mcl-* services that run on the mesh (each service assesses itself; the station's relay of their traffic is in scope)
+  - 'the physical security of the VPS datacentres: the providers'' responsibility, covered here only as org measures'
+  - 'vendor firmware below the operating system: the providers'' and chip vendors'' signing ceremonies are theirs, and their compromise is a trust-anchor risk named in this assessment, not assessed here'
+  - 'clients of the mesh (SDKs, applications, user devices): their own keys and their own boxes'
 attributes:
-  core: [confidentiality, integrity, availability, authenticity, accountability]
+  core:
+  - confidentiality
+  - integrity
+  - availability
+  - authenticity
+  - accountability
   enabled: []
   disabled_justifications:
-    possession: One claim about key exchange; physical control of a station is out of this assessment's scope.
-    utility: One claim about key exchange; usefulness of data is out of this assessment's scope.
+    possession: 'Physical possession of a station or its key material is out of this assessment''s scope: the boxes live in the providers'' datacentres, and possession loss there flows through the providers'' physical security (an org measure under physical_natural).'
+    utility: 'Utility (an asset intact but useless) is out of scope: the station has no data whose usefulness, as opposed to its secrecy and integrity, is a loss on its own.'
 columns:
-  actors: [internal, external, trusted_partner, machine_agent]
-  lifecycle: [create, acquire, deliver, operate, admin, decommission]
-  data: [at_rest, in_motion, in_use]
-  environment: [physical_natural, socio_legal, temporal]
+  actors:
+  - internal
+  - external
+  - trusted_partner
+  - machine_agent
+  lifecycle:
+  - create
+  - acquire
+  - deliver
+  - operate
+  - admin
+  - decommission
+  data:
+  - at_rest
+  - in_motion
+  - in_use
+  environment:
+  - physical_natural
+  - socio_legal
+  - temporal
+trust_anchor_registry: trust-anchors.md
+landscape: landscape.md
 cells_dir: cells/
+team:
+- raf.lefever@erlef.org
 targets:
   fleet_stations:
     kind: macula_station
     stations:
-      # station-nl-ams: its QUIC listener and its node id, as macula-fleet
-      # configures it.
-      - address: "[2600:3c0e::2000:c2ff:fed0:f20b]:4433"
-        node_id: "000370eebafa9a89a44c9448b4796788fbff1885abd67c80d681d28cebb04b0c"
+    - address: '[2600:3c0e::2000:c2ff:fed0:f20b]:4433'
+      node_id: 000370eebafa9a89a44c9448b4796788fbff1885abd67c80d681d28cebb04b0c
 policy:
   publish: every_result
   cadence: PT1H
   suspended: []
   observers:
-    # mcl-fovea on debian-gb-lon, admitted to the io.macula realm.
-    - "00c71da98e6fd854779266ba63dc2f4d79d86d0f5ed761d9c3bf886cd5337b52"
+  - 00c71da98e6fd854779266ba63dc2f4d79d86d0f5ed761d9c3bf886cd5337b52

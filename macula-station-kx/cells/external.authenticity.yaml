@@ -1,0 +1,27 @@
+id: external.authenticity
+status: assumed
+owner: raf.lefever@erlef.org
+threat:
+  definition: 'A stranger on the internet poses as the station or as a realm authority: answers at the station''s address, presents a stolen or guessed identity, and gets peers to trust what it says.'
+  manifestations:
+  - BGP or DNS hijack points the station's address at an attacker's box
+  - An attacker with the station's key answers handshakes as the station
+  - A forged realm advertisement is accepted by a peer that did not pin the realm key
+defense:
+  detection:
+  - measure: Peers pin the station's node id and the realm's key; a handshake that cannot prove the id is refused
+    status: by_design
+    source: macula-io/macula (pinned seeds, handshake challenge)
+  - measure: mcl-fovea's probe counts a handshake only when the station proves its identity, and publishes what it saw
+    status: by_design
+    source: macula-services/mcl-fovea
+  countermeasures:
+  - measure: The handshake challenge binds the session to the node's signing key
+    status: by_design
+    source: macula-io/macula (handshake v5)
+  - measure: Realm trust is by key, pinned in config, never by name
+    status: by_design
+    source: macula-io/macula (realm trust)
+  recovery:
+  - measure: Rotate the hijacked key and re-pin the address in client configs
+    status: org

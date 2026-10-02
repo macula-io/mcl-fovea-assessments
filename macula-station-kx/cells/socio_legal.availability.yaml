@@ -1,0 +1,23 @@
+id: socio_legal.availability
+status: assumed
+owner: raf.lefever@erlef.org
+threat:
+  definition: 'Law and politics deny the station its ability to run: a jurisdiction blocks the provider, an export control halts dependencies, or a takedown order forces the operator to stop.'
+  manifestations:
+  - A country blocks the provider's address space
+  - Export controls stop shipping updates with cryptographic components
+  - A takedown or seizure order forces the box offline
+defense:
+  detection:
+  - measure: The observer's rounds over the station turn unknown, publicly
+    status: by_design
+    source: macula-services/mcl-fovea
+  countermeasures:
+  - measure: Stations spread over jurisdictions mean one country's action is partial
+    status: org
+  - measure: The mesh routes around a station that is gone
+    status: by_design
+    source: macula-io/macula (pool)
+  recovery:
+  - measure: Move the station to a viable jurisdiction and re-enroll
+    status: org

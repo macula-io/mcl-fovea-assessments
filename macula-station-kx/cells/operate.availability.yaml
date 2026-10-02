@@ -1,0 +1,26 @@
+id: operate.availability
+status: assumed
+owner: raf.lefever@erlef.org
+threat:
+  definition: 'The station loses availability while running: a crash loop, a resource leak, or a software bug takes the listener down and the mesh loses a seed.'
+  manifestations:
+  - A memory leak grows until the BEAM is killed
+  - A crash loop in a hot path restarts the station repeatedly
+  - A code path throws on malformed input and drops the connection
+defense:
+  detection:
+  - measure: The observer's hourly rounds turn unknown when the station stops answering
+    status: by_design
+    source: macula-services/mcl-fovea
+  - measure: Box-level monitoring watches process health and restarts
+    status: org
+  countermeasures:
+  - measure: OTP supervision restarts failed parts without losing the node identity
+    status: by_design
+    source: macula-io/macula (OTP release)
+  - measure: Pools hold several pinned seeds and re-dial a dropped station
+    status: by_design
+    source: macula-io/macula (pool)
+  recovery:
+  - measure: Restart, let the pool re-dial, and re-fetch the records the station serves
+    status: org

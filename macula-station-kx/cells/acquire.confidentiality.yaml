@@ -1,0 +1,26 @@
+id: acquire.confidentiality
+status: assumed
+owner: raf.lefever@erlef.org
+threat:
+  definition: 'Software or hardware the station procures hides something that exfiltrates: a counterfeit network card, a vendor''s management plane, or a dependency that phones home.'
+  manifestations:
+  - A supply-chain attack ships a dependency that uploads DHT queries to the vendor
+  - A VPS provider's agent exposes the box's memory to its control plane
+  - Counterfeit hardware reads keys off the bus
+defense:
+  detection:
+  - measure: SBOM review of what every image contains, before it runs
+    status: by_design
+    source: macula-ci-images (attest-image.yml)
+  - measure: Egress monitoring on the box catches unexpected outbound connections
+    status: org
+  countermeasures:
+  - measure: The station runs a minimal image from a pinned builder; nothing extra is installed
+    status: by_design
+    source: macula-ci-images
+  - measure: Sealed payloads mean a station on the path has nothing readable to leak
+    status: by_design
+    source: macula-io/macula plans/DESIGN_E2E_PAYLOAD_CONFIDENTIALITY.md
+  recovery:
+  - measure: Wipe the box, rebuild from verified images, rotate keys
+    status: org

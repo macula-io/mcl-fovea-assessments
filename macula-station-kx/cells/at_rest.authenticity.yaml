@@ -1,0 +1,21 @@
+id: at_rest.authenticity
+status: assumed
+owner: raf.lefever@erlef.org
+threat:
+  definition: 'The provenance of stored data is lost or forged: a record''s signer cannot be checked later, or a stored copy is swapped for another''s, so what the station serves is not what was signed.'
+  manifestations:
+  - A record is replaced at rest with a different record of the same signer
+  - An old version is restored from a snapshot and served as current
+  - The station serves a record whose signature checks out but whose storage key belongs elsewhere
+defense:
+  detection:
+  - measure: Every record's signer and slot are derived from its own bytes; a mismatch refuses
+    status: by_design
+    source: macula-io/macula plans/DESIGN_PQ_SIGNED_FRAMES_AND_RECORDS.md
+  countermeasures:
+  - measure: Records are self-authenticating signed objects
+    status: by_design
+    source: macula-io/macula plans/DESIGN_PQ_SIGNED_FRAMES_AND_RECORDS.md
+  recovery:
+  - measure: Re-fetch the authentic copies from peers and expire the forgeries
+    status: org

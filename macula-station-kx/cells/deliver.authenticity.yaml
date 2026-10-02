@@ -1,0 +1,28 @@
+id: deliver.authenticity
+status: assumed
+owner: raf.lefever@erlef.org
+threat:
+  definition: 'The box cannot prove what it runs: no attestation ties the running station to the verified image, so a box that was swapped or altered in place goes unnoticed.'
+  manifestations:
+  - A box is re-imaged by the provider and runs a lookalike station
+  - Someone swaps the disk between verification and boot
+  - The running process is replaced after startup without a reboot
+defense:
+  detection:
+  - measure: Foundation T3 attestation would bind a running box to its station identity
+    status: roadmap
+    source: macula-io/macula plans/DESIGN_PQ_SIGNED_FRAMES_AND_RECORDS.md (foundation T3 attestation)
+  - measure: The observer's probe checks from outside that the station proves the node id the assessment declares
+    status: by_design
+    source: macula-services/mcl-fovea
+  countermeasures:
+  - measure: Every boot applies only a verified tag, and the boot path is owner-only
+    status: by_design
+    source: macula-io/macula-fleet
+  - measure: Remote attestation of station boxes in the fleet
+    status: roadmap
+    source: macula-io/macula plans/DESIGN_PQ_SIGNED_FRAMES_AND_RECORDS.md
+  recovery:
+  - measure: Re-image from the verified tag and re-enroll the box
+    status: org
+review_by: '2027-09-30'

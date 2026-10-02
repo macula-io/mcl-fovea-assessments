@@ -1,0 +1,27 @@
+id: in_motion.integrity
+status: assumed
+owner: raf.lefever@erlef.org
+threat:
+  definition: 'Data crossing the mesh is altered in flight: frames are modified between peers, a relay reorders or drops parts of a stream, or an on-path actor injects content into a session.'
+  manifestations:
+  - An on-path party flips bytes in a relayed frame
+  - A relay delivers stream chunks out of order
+  - Injected frames enter a session from an address that did not open it
+defense:
+  detection:
+  - measure: Frame integrity and the handshake's channel binding fail closed on modification
+    status: by_design
+    source: macula-io/macula (handshake v5)
+  - measure: Readers verify payload signatures end to end
+    status: by_design
+    source: macula-io/macula plans/DESIGN_PQ_SIGNED_FRAMES_AND_RECORDS.md
+  countermeasures:
+  - measure: QUIC's authenticated encryption protects every frame in transit
+    status: by_design
+    source: macula-io/macula (QUIC transport)
+  - measure: End-to-end signatures on records mean path changes cannot pass
+    status: by_design
+    source: macula-io/macula plans/DESIGN_PQ_SIGNED_FRAMES_AND_RECORDS.md
+  recovery:
+  - measure: Re-establish the session and re-fetch what the path may have altered
+    status: org

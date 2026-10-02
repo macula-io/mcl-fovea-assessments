@@ -1,0 +1,23 @@
+id: in_motion.accountability
+status: assumed
+owner: raf.lefever@erlef.org
+threat:
+  definition: 'Traffic in flight leaves no attributable trail: who spoke to whom, when, and through which relay is unrecorded, so misuse of the mesh''s transport is invisible.'
+  manifestations:
+  - Relayed calls are not logged with their origin
+  - The mesh carries traffic with no record of the path it took
+  - An abuse report cannot be traced to a node
+defense:
+  detection:
+  - measure: Signed frames carry the sender's identity, so a reported frame names its origin
+    status: by_design
+    source: macula-io/macula plans/DESIGN_PQ_SIGNED_FRAMES_AND_RECORDS.md
+  countermeasures:
+  - measure: Mesh identities on every signed record make transport abuse attributable
+    status: by_design
+    source: macula-io/macula (realm identities)
+  - measure: Transport metadata retention for incident response
+    status: org
+  recovery:
+  - measure: Trace the offending frames to their signer and act on the identity
+    status: org

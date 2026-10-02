@@ -1,0 +1,23 @@
+id: deliver.accountability
+status: assumed
+owner: raf.lefever@erlef.org
+threat:
+  definition: 'The delivery chain is unattributable: which box runs which digest, who released it, and who signed off is not recorded, so a bad deployment cannot be traced.'
+  manifestations:
+  - Boxes drift across digests with no central record
+  - A release is pushed by an unnamed session
+  - The sign-off for a deployment is implicit
+defense:
+  detection:
+  - measure: The reconciler records the tag applied on every box, with its signer
+    status: by_design
+    source: macula-io/macula-fleet
+  countermeasures:
+  - measure: Signed release tags name the signer; the box refuses anything else
+    status: by_design
+    source: macula-io/macula-fleet (allowed_signers)
+  - measure: Deployment logs are journaled and retained
+    status: org
+  recovery:
+  - measure: Audit the applied-tag records to find every box that took a bad release
+    status: org
