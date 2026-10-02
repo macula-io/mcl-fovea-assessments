@@ -1,0 +1,25 @@
+id: create.confidentiality
+status: assumed
+owner: raf.lefever@erlef.org
+threat:
+  definition: 'Secrets leak during design and build: a key or credential is committed to a repository, printed in CI logs, or embedded in a test fixture, and ships into production unnoticed.'
+  manifestations:
+  - A developer commits a station key to a public repo
+  - CI prints a realm secret in a build log
+  - A test fixture ships with a live credential
+defense:
+  detection:
+  - measure: Secret scanning in CI refuses pushes that look like keys
+    status: org
+  - measure: 'The build never sees production secrets: they are written on the box at enrollment'
+    status: by_design
+    source: macula-io/mcl-fovea-fleet (enrollment)
+  countermeasures:
+  - measure: Production keys are generated on the box and never enter the build pipeline
+    status: by_design
+    source: macula-io/macula-fleet
+  - measure: 'Repository hygiene: no secrets committed, scanned continuously'
+    status: org
+  recovery:
+  - measure: Rotate the leaked key and trace where it was used
+    status: org

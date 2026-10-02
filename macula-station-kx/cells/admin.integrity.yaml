@@ -1,0 +1,26 @@
+id: admin.integrity
+status: assumed
+owner: raf.lefever@erlef.org
+threat:
+  definition: 'Administration corrupts trust state: a botched key rotation, a revoked record that stays live, or a config change that weakens the station''s posture silently.'
+  manifestations:
+  - A rotation leaves the old key valid and the new one unknown to peers
+  - A revocation is issued but its tombstone never reaches the DHT
+  - An admin relaxes a slot budget to fix an incident and forgets to restore it
+defense:
+  detection:
+  - measure: The realm publishes tombstones on revoke, and every verifier reads them
+    status: by_design
+    source: macula-io/macula-realm (macula-realm#31)
+  - measure: Fleet config changes are signed tags, diffed and reviewed
+    status: by_design
+    source: macula-io/macula-fleet
+  countermeasures:
+  - measure: Changes go through reviewed signed releases, never hand edits
+    status: by_design
+    source: macula-io/macula-fleet
+  - measure: Key rotation ceremonies are scripted and rehearsed
+    status: org
+  recovery:
+  - measure: Re-issue the endorsement, re-publish the tombstone, verify readers see the new state
+    status: org

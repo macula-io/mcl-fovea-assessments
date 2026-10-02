@@ -1,0 +1,23 @@
+id: decommission.integrity
+status: assumed
+owner: raf.lefever@erlef.org
+threat:
+  definition: 'Decommissioning corrupts the mesh''s history or state: records served by a retired station vanish without expiry, or a station is removed in a way that forks the record set.'
+  manifestations:
+  - A station is shut down while holding the only copies of unexpired records
+  - The DHT loses a slot's records because the station holding them is retired
+  - A tombstone meant to retire the station's identity is never published
+defense:
+  detection:
+  - measure: The keeper's chain verification reports gaps when kept history stops matching the DHT
+    status: by_design
+    source: macula-io/mcl-fovea-keeper
+  countermeasures:
+  - measure: Records live on several stations with expiry, so no single retirement loses them
+    status: by_design
+    source: macula-io/macula (DHT replication)
+  - measure: Decommissioning publishes the tombstones before the box is taken down
+    status: org
+  recovery:
+  - measure: Re-publish the unexpired records from other stations; re-issue the tombstones
+    status: org

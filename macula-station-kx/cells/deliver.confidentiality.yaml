@@ -1,0 +1,24 @@
+id: deliver.confidentiality
+status: assumed
+owner: raf.lefever@erlef.org
+threat:
+  definition: 'Secrets leak on the way to the box: configuration with keys travels in the clear, an enrollment token is intercepted, or a first-boot channel is readable by the provider.'
+  manifestations:
+  - A station key is transferred to the box over an unencrypted channel
+  - Bootstrap credentials are sent by email or chat
+  - The provider's provisioning API exposes the enrollment secret
+defense:
+  detection:
+  - measure: Enrollment happens by hand on the box, from a verified tag; nothing of the repository runs before that
+    status: by_design
+    source: macula-io/mcl-fovea-fleet (enrollment)
+  countermeasures:
+  - measure: Keys are generated on the box and never cross the network
+    status: by_design
+    source: macula-io/macula-fleet
+  - measure: Secrets land in owner-only files under /etc/mcl/secrets, written once at enrollment
+    status: by_design
+    source: macula-services/mcl-om
+  recovery:
+  - measure: Rotate anything that may have been exposed and re-enroll the box
+    status: org

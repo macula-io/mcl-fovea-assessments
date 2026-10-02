@@ -1,0 +1,23 @@
+id: acquire.availability
+status: assumed
+owner: raf.lefever@erlef.org
+threat:
+  definition: 'The supply of what the station needs dries up: a vendor folds, a license expires, or a required image is delisted, and the station cannot be rebuilt or updated.'
+  manifestations:
+  - A base image is unpublished from the registry
+  - A vendor's signing key expires and the vendor is gone
+  - A dependency is abandoned with a known vulnerability
+defense:
+  detection:
+  - measure: Dependabot and pin-staleness checks flag dependencies drifting out of support
+    status: by_design
+    source: macula-io/macula-fovea (scripts/pin checks)
+  countermeasures:
+  - measure: The builder image is pinned and cached locally, so a registry outage does not stop builds
+    status: by_design
+    source: macula-ci-images
+  - measure: Prefer dependencies with multiple maintainers and an exit plan
+    status: org
+  recovery:
+  - measure: Fork or replace the abandoned dependency, rebuild, re-verify
+    status: org

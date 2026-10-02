@@ -1,0 +1,19 @@
+id: decommission.accountability
+status: assumed
+owner: raf.lefever@erlef.org
+threat:
+  definition: 'The end of a station''s life is unrecorded: which hardware went where, who wiped it, and what was revoked is not documented, so a retired asset cannot be traced.'
+  manifestations:
+  - A box is decommissioned without a record of its disks
+  - The person who wiped the box is not recorded
+  - No record states the station's identity was revoked
+defense:
+  detection:
+  - measure: A decommissioning checklist is completed and signed per box
+    status: org
+  countermeasures:
+  - measure: Retirement actions (tombstones, unpinning, wipes) are committed changes with authors
+    status: org
+  recovery:
+  - measure: Reconstruct from the checklist and git history what was retired and when
+    status: org

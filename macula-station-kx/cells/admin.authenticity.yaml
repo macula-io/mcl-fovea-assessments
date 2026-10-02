@@ -1,0 +1,23 @@
+id: admin.authenticity
+status: assumed
+owner: raf.lefever@erlef.org
+threat:
+  definition: 'Administrative authority is forged or captured: an admin account is taken over, a signing key is stolen, or an attacker issues management actions the real admin never made.'
+  manifestations:
+  - An attacker with a stolen admin key signs a rogue release
+  - A phishing attack captures an operator's credentials
+  - A forged instruction leads a box to apply an unsigned config
+defense:
+  detection:
+  - measure: Boxes verify the signer of every tag against the on-box anchor and refuse the rest
+    status: by_design
+    source: macula-io/macula-fleet (allowed_signers)
+  countermeasures:
+  - measure: The on-box signer anchor can only be rotated by the current signer
+    status: by_design
+    source: macula-io/macula-fleet
+  - measure: Admin credentials are hardware-bound where possible
+    status: org
+  recovery:
+  - measure: Rotate the compromised key, re-sign, re-verify the fleet
+    status: org

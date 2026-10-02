@@ -1,0 +1,27 @@
+id: external.integrity
+status: assumed
+owner: raf.lefever@erlef.org
+threat:
+  definition: 'An outside party injects or alters what the mesh carries: submits forged records, replays old ones, or poisons a station''s DHT with data that verifies for no one but still occupies slots.'
+  manifestations:
+  - A stranger fills a shared slot with junk records to crowd out the real signer
+  - An attacker replays an expired record to keep stale state alive
+  - An on-path party rewrites frames between two peers
+defense:
+  detection:
+  - measure: Slot budgets bound how many records one slot holds, and unchecked entries are capped
+    status: by_design
+    source: macula-io/macula plans/DESIGN_PQ_DHT_SLOTS_AND_BUDGET.md
+  - measure: Every record verifies against its signer or is refused; tampering cannot pass
+    status: by_design
+    source: macula-io/macula plans/DESIGN_PQ_SIGNED_FRAMES_AND_RECORDS.md
+  countermeasures:
+  - measure: Records are signed end to end; stations store and serve bytes they cannot modify
+    status: by_design
+    source: macula-io/macula plans/DESIGN_PQ_SIGNED_FRAMES_AND_RECORDS.md
+  - measure: Frame integrity and the handshake's channel binding make on-path rewriting fail
+    status: by_design
+    source: macula-io/macula (handshake v5)
+  recovery:
+  - measure: Drop the poisoned slot contents and re-fetch from other stations; expire and re-put the real records
+    status: org

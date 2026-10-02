@@ -1,0 +1,27 @@
+id: temporal.integrity
+status: assumed
+owner: raf.lefever@erlef.org
+threat:
+  definition: 'Time erodes what the station depends on for correctness: certificates and endorsements expire un-renewed, records outlive their validity, and keys age past their rotation date.'
+  manifestations:
+  - An endorsement expires while the member still operates
+  - Records outlive their expiry because no one expires them
+  - A signing key is used far past its planned lifetime
+defense:
+  detection:
+  - measure: Expiry is part of every record's verification; an expired record refuses
+    status: by_design
+    source: macula-io/macula plans/DESIGN_PQ_SIGNED_FRAMES_AND_RECORDS.md
+  - measure: The realm renews endorsements before they expire and tombstones on revoke
+    status: by_design
+    source: macula-io/macula-realm
+  countermeasures:
+  - measure: Bounded validity windows on every signed object
+    status: by_design
+    source: macula-io/macula plans/DESIGN_PQ_SIGNED_FRAMES_AND_RECORDS.md
+  - measure: A rotation calendar with review_by dates enforced by lint
+    status: by_design
+    source: macula-io/macula-fovea
+  recovery:
+  - measure: Renew the expired endorsement, re-issue the record, rotate the key
+    status: org

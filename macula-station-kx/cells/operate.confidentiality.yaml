@@ -1,0 +1,25 @@
+id: operate.confidentiality
+status: assumed
+owner: raf.lefever@erlef.org
+threat:
+  definition: 'In normal operation something reads what it should not: a station relays payloads it can decode, a monitoring agent over-collects, or an operational backup exposes records.'
+  manifestations:
+  - The station's pubsub relay reads event payloads in the clear
+  - A metrics exporter ships record contents, not just counts
+  - An operator takes a backup that includes the identity key
+defense:
+  detection:
+  - measure: The E2E seal design enumerates what a station on the path still sees (§9), so over-collection is a named list, not a surprise
+    status: by_design
+    source: macula-io/macula plans/DESIGN_E2E_PAYLOAD_CONFIDENTIALITY.md §9
+  countermeasures:
+  - measure: Sealed calls and streams (E2E seal scheme 1)
+    status: by_design
+    source: macula-io/macula (13.0.0)
+  - measure: Sealed pubsub so stations relay events they cannot read
+    status: roadmap
+    source: macula-io/macula plans/DESIGN_E2E_SEALED_PUBSUB.md
+  recovery:
+  - measure: Rotate the group keys and any key the leak touched
+    status: org
+review_by: '2027-06-30'

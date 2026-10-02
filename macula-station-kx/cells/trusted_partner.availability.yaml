@@ -1,0 +1,22 @@
+id: trusted_partner.availability
+status: assumed
+owner: raf.lefever@erlef.org
+threat:
+  definition: 'A partner the station leans on disappears or fails: the VPS provider has an outage, the registry is unreachable, or a dependency''s service goes dark, and the station cannot run or update.'
+  manifestations:
+  - The provider's network partitions the station from the mesh
+  - The image registry is down during a rollout
+  - A dependency's build service outage blocks a security fix
+defense:
+  detection:
+  - measure: The fleet and observer notice a station that stops answering; uptime checks alert the operator
+    status: org
+  countermeasures:
+  - measure: The station runs from its local image; it does not pull from the registry at runtime
+    status: by_design
+    source: macula-io/macula-fleet
+  - measure: The six stations are spread over providers, so one provider's outage is partial
+    status: org
+  recovery:
+  - measure: Restore the box or move the station to another provider; the identity key is the only state that must survive
+    status: org

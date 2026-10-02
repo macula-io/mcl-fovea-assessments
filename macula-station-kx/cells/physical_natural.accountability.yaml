@@ -1,0 +1,19 @@
+id: physical_natural.accountability
+status: assumed
+owner: raf.lefever@erlef.org
+threat:
+  definition: 'Physical events and the responses to them are unrecorded: which box failed, who replaced it, and what happened to the old hardware is not documented, so losses are untraceable.'
+  manifestations:
+  - A disk failure is repaired without a record of the data on it
+  - A box is swapped by the provider with no handover note
+  - No inventory tracks where retired hardware ended up
+defense:
+  detection:
+  - measure: An asset inventory tracks each box and its disks through its life
+    status: org
+  countermeasures:
+  - measure: Incident records for every physical event, with dates and actions
+    status: org
+  recovery:
+  - measure: Reconstruct from the inventory and incident records what was lost
+    status: org

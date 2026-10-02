@@ -1,0 +1,23 @@
+id: in_use.availability
+status: assumed
+owner: raf.lefever@erlef.org
+threat:
+  definition: 'The station runs out of ability to compute: CPU, memory or file descriptors exhaust under load, and the station stops serving even though nothing failed.'
+  manifestations:
+  - Handshake verification saturates the CPU under a connection flood
+  - Memory exhausts and the BEAM stops scheduling
+  - File descriptors run out and new sessions are refused
+defense:
+  detection:
+  - measure: Box monitoring watches CPU, memory and descriptor usage
+    status: org
+  countermeasures:
+  - measure: Slot budgets and admission bounds cap verification work
+    status: by_design
+    source: macula-io/macula plans/DESIGN_PQ_DHT_SLOTS_AND_BUDGET.md
+  - measure: OTP supervision isolates overload to the failing part
+    status: by_design
+    source: macula-io/macula (OTP release)
+  recovery:
+  - measure: Restart the station; the pool re-dials and the DHT re-fills
+    status: org

@@ -1,0 +1,23 @@
+id: internal.availability
+status: assumed
+owner: raf.lefever@erlef.org
+threat:
+  definition: 'A trusted insider takes a station down or degrades it: misconfiguration, a bad deployment, or deliberate shutdown of the QUIC listener, cutting a region of the mesh off.'
+  manifestations:
+  - A rushed config change breaks the listener and the box stays up but unreachable
+  - An operator stops the station service during maintenance and forgets to restart it
+  - A disgruntled insider deletes the station's identity volume so it cannot rejoin
+defense:
+  detection:
+  - measure: Client pools and the observer notice a station that stops answering; mcl-fovea's rounds turn unknown
+    status: by_design
+    source: macula-services/mcl-fovea
+  countermeasures:
+  - measure: 'Six fleet stations: any one outage is a partial mesh, and pools re-dial pinned seeds'
+    status: by_design
+    source: macula-io/macula (mesh pool)
+  - measure: A second person reviews every fleet change before it ships
+    status: org
+  recovery:
+  - measure: Restore from the fleet config and the identity volume; the station rejoins and re-fetches records
+    status: org

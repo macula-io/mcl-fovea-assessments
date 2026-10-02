@@ -1,0 +1,26 @@
+id: machine_agent.availability
+status: assumed
+owner: raf.lefever@erlef.org
+threat:
+  definition: 'Automated clients, friendly or hostile, starve the station: runaway reconnects, aggressive polling or a broken SDK loop holds the listener busy so real traffic queues behind it.'
+  manifestations:
+  - A buggy client library reconnects in a tight loop after every refusal
+  - A monitoring agent polls every slot every second
+  - A misconfigured agent floods the mesh with advertisements
+defense:
+  detection:
+  - measure: The station's connection and queue metrics expose which source saturates it
+    status: org
+  - measure: The observer's hourly rounds degrade to unknown when the station cannot answer
+    status: by_design
+    source: macula-services/mcl-fovea
+  countermeasures:
+  - measure: Per-slot and per-class budgets bound what any signer can occupy
+    status: by_design
+    source: macula-io/macula plans/DESIGN_PQ_DHT_SLOTS_AND_BUDGET.md
+  - measure: QUIC's built-in flow control sheds overload at the transport
+    status: by_design
+    source: macula-io/macula (QUIC transport)
+  recovery:
+  - measure: Identify the flooding source, fix or block it, and let the station drain
+    status: org

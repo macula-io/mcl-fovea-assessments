@@ -1,0 +1,24 @@
+id: acquire.accountability
+status: assumed
+owner: raf.lefever@erlef.org
+threat:
+  definition: 'Procurement leaves no record: which vendor, which version, which trust decision and who approved it are lost, so a bad component cannot be traced to its entry point.'
+  manifestations:
+  - A dependency is added without a review record
+  - Two teams procure overlapping components with conflicting versions
+  - The person who approved a vendor is no longer with the project
+defense:
+  detection:
+  - measure: Lockfiles and the SBOM record exactly what was pulled
+    status: by_design
+    source: macula-ci-images (attest-image.yml)
+  - measure: Every dependency change is a reviewed commit
+    status: org
+  countermeasures:
+  - measure: A pinned component manifest names each dependency and its version
+    status: roadmap
+    source: macula-services/mcl-fovea plans/PLAN_FOVEA_STRATEGY.md (phase 4)
+  recovery:
+  - measure: Rebuild the procurement trail from git history and lockfiles
+    status: org
+review_by: '2027-06-30'

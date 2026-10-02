@@ -1,0 +1,27 @@
+id: external.confidentiality
+status: assumed
+owner: raf.lefever@erlef.org
+threat:
+  definition: 'An outside adversary, without valid credentials, extracts content from a station across the internet: reads DHT records it should not see, unseals relayed payloads, or recovers the signing key.'
+  manifestations:
+  - A scanner finds an unauthenticated endpoint that serves stored records
+  - An attacker breaks the QUIC session protection and reads relayed frames
+  - A key-recovery attack against the station's signing key after heavy use
+defense:
+  detection:
+  - measure: mcl-fovea probes what the station accepts from outside and publishes it signed; a widened surface changes the verdict
+    status: by_design
+    source: macula-services/mcl-fovea
+  - measure: Unexpected listener ports or endpoints are refused by the fleet reconciler's unit gate
+    status: by_design
+    source: macula-io/macula-fleet
+  countermeasures:
+  - measure: Only the QUIC listener is exposed; everything the station serves goes through the authenticated handshake
+    status: by_design
+    source: macula-io/macula
+  - measure: Sealed payloads mean the station itself cannot read relayed calls
+    status: by_design
+    source: macula-io/macula plans/DESIGN_E2E_PAYLOAD_CONFIDENTIALITY.md
+  recovery:
+  - measure: Revoke and re-issue anything the station signed; rotate its key
+    status: org

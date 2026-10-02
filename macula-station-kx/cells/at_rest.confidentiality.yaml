@@ -1,0 +1,23 @@
+id: at_rest.confidentiality
+status: assumed
+owner: raf.lefever@erlef.org
+threat:
+  definition: 'What the station keeps on disk is read by someone who should not read it: the node identity key, persisted config, or stored records, at rest on the box''s storage.'
+  manifestations:
+  - The provider reads the box's disk
+  - A backup copy of the box's volume leaks
+  - The identity key sits unencrypted in the station's volume
+defense:
+  detection:
+  - measure: File permissions and volume ownership are part of the box's enrollment checks
+    status: org
+  countermeasures:
+  - measure: The identity key lives in its own volume with owner-only permissions
+    status: by_design
+    source: macula-services/mcl-om (/etc/mcl/secrets)
+  - measure: Disk encryption for station volumes
+    status: roadmap
+  recovery:
+  - measure: Treat a read at rest as key compromise and rotate
+    status: org
+review_by: '2027-09-30'

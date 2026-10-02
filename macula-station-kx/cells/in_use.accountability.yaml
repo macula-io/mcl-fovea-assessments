@@ -1,0 +1,20 @@
+id: in_use.accountability
+status: assumed
+owner: raf.lefever@erlef.org
+threat:
+  definition: 'Computation happens with no record of what ran: which code served which request, which key signed what, and what the station actually did is unrecoverable after the fact.'
+  manifestations:
+  - The station's actions in memory are never logged
+  - A signed record cannot be tied to the process that produced it
+  - Errors during processing are dropped without context
+defense:
+  detection:
+  - measure: The observer's signed records are an outside account of what the station did
+    status: by_design
+    source: macula-services/mcl-fovea
+  countermeasures:
+  - measure: Structured logging of requests, signings and errors on the box
+    status: org
+  recovery:
+  - measure: Reconstruct from logs and the observer's history what was processed
+    status: org

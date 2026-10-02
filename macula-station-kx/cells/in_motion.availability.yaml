@@ -1,0 +1,27 @@
+id: in_motion.availability
+status: assumed
+owner: raf.lefever@erlef.org
+threat:
+  definition: 'The path between peers fails or is degraded: a link saturates, a route blackholes, or the relay chain breaks, so traffic cannot get through even though both ends are up.'
+  manifestations:
+  - A network partition splits the station from its peers
+  - A saturated link drops handshakes and calls
+  - An upstream provider reroutes the station's traffic into a dead path
+defense:
+  detection:
+  - measure: The observer's rounds turn unknown when the path to the station fails
+    status: by_design
+    source: macula-services/mcl-fovea
+  - measure: Pool health checks and re-dial logic detect a dead link
+    status: by_design
+    source: macula-io/macula (pool)
+  countermeasures:
+  - measure: Several stations and direct-dial paths give the mesh alternatives
+    status: by_design
+    source: macula-io/macula (direct dial)
+  - measure: Pools hold multiple seeds and redial dropped links
+    status: by_design
+    source: macula-io/macula (pool)
+  recovery:
+  - measure: Fail over to another path; restore the route and let pools re-dial
+    status: org

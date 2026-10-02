@@ -1,0 +1,7 @@
+id: physical_natural.confidentiality
+status: na
+owner: raf.lefever@erlef.org
+threat:
+  definition: A flood, fire, earthquake or other natural event acting on the station's surroundings.
+  manifestations: []
+na_reason: 'Natural events act on a station''s availability and physical possession: they destroy, move or seize equipment. None of them reads records, keys or relayed payloads. The confidentiality loss a seized or exposed box causes would flow through possession, an extension this assessment leaves disabled with a written justification; the destruction side is covered under physical_natural.availability.'

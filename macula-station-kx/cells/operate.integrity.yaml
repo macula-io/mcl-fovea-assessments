@@ -1,0 +1,27 @@
+id: operate.integrity
+status: assumed
+owner: raf.lefever@erlef.org
+threat:
+  definition: 'The running system corrupts itself or is corrupted: a bug mis-stores records, memory pressure drops writes, or an on-path actor flips bits between stations.'
+  manifestations:
+  - A station stores a record with a corrupted payload under memory pressure
+  - A relay reorders frames under load
+  - An on-path party modifies frames between two stations
+defense:
+  detection:
+  - measure: Readers verify every record against its signature and refuse corrupt ones
+    status: by_design
+    source: macula-io/macula plans/DESIGN_PQ_SIGNED_FRAMES_AND_RECORDS.md
+  - measure: The observer's rounds and the keeper's chain verification would show a station misbehaving
+    status: by_design
+    source: macula-services/mcl-fovea
+  countermeasures:
+  - measure: Records are signed end to end; nothing on the path can change them unnoticed
+    status: by_design
+    source: macula-io/macula plans/DESIGN_PQ_SIGNED_FRAMES_AND_RECORDS.md
+  - measure: Frame integrity and channel binding in the handshake
+    status: by_design
+    source: macula-io/macula (handshake v5)
+  recovery:
+  - measure: Re-fetch the affected slots from peers; expire the corrupt copies
+    status: org

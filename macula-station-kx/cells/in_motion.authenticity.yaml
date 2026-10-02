@@ -1,0 +1,24 @@
+id: in_motion.authenticity
+status: assumed
+owner: raf.lefever@erlef.org
+threat:
+  definition: 'Identity is not what it claims mid-flight: a session is hijacked, a relay poses as the destination, or a frame is replayed from an earlier exchange.'
+  manifestations:
+  - A replay of an old handshake frame is accepted
+  - A relay answers as the target station
+  - A session's channel is rebound to another endpoint
+defense:
+  detection:
+  - measure: The handshake challenge proves possession of the node key before a session is accepted
+    status: by_design
+    source: macula-io/macula (handshake challenge)
+  countermeasures:
+  - measure: Handshake v5 binds the session to its TLS channel
+    status: by_design
+    source: macula-io/macula (handshake v5)
+  - measure: Fresh nonces and sequence numbers make replays fail
+    status: by_design
+    source: macula-io/macula (frame seq)
+  recovery:
+  - measure: Drop the session, re-handshake, verify the peer again
+    status: org

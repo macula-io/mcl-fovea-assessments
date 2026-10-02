@@ -1,0 +1,23 @@
+id: admin.accountability
+status: assumed
+owner: raf.lefever@erlef.org
+threat:
+  definition: 'Administrative actions cannot be attributed: who rotated which key, who changed which config, and who approved it is unrecorded, so mistakes hide.'
+  manifestations:
+  - A rotation is performed without a record of who ran it
+  - Config changes land without an author or reviewer
+  - Approvals happen in private chat, invisible to later audit
+defense:
+  detection:
+  - measure: Signed tags and git history name the author and the change
+    status: by_design
+    source: macula-io/macula-fleet
+  countermeasures:
+  - measure: Every management action is a reviewed commit or a signed release
+    status: org
+  - measure: The box journals what it applied and when
+    status: by_design
+    source: macula-io/macula-fleet
+  recovery:
+  - measure: Reconstruct the sequence of admin actions from git, the journal and the keeper's logs
+    status: org

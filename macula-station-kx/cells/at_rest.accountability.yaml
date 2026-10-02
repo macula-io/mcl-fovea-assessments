@@ -1,0 +1,22 @@
+id: at_rest.accountability
+status: assumed
+owner: raf.lefever@erlef.org
+threat:
+  definition: 'Access to what rests on the station''s disk is untraceable: reads of stored records and the key volume leave no trail, so a compromise at rest is invisible.'
+  manifestations:
+  - The provider's hypervisor reads the volume with no guest-side trace
+  - An operator copies the identity volume without a log entry
+  - Backups are taken and moved with no record of who holds them
+defense:
+  detection:
+  - measure: Access logging on the box records volume reads by humans
+    status: org
+  countermeasures:
+  - measure: Host-level encryption and tamper-evident volumes
+    status: roadmap
+  - measure: Only named operators hold box access, and each has a personal account
+    status: org
+  recovery:
+  - measure: Audit access logs after an incident; rotate anything read
+    status: org
+review_by: '2027-09-30'

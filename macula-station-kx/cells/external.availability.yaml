@@ -1,0 +1,26 @@
+id: external.availability
+status: assumed
+owner: raf.lefever@erlef.org
+threat:
+  definition: 'An outside attacker denies the mesh a station: floods the QUIC port, exhausts the box''s resources, or forces it to spend its verification budget so real clients time out.'
+  manifestations:
+  - A UDP flood saturates the station's link
+  - Handshake requests at scale exhaust CPU and memory
+  - Slot-filling attacks push the DHT's admission budget so honest puts are refused
+defense:
+  detection:
+  - measure: The observer's hourly rounds turn unknown when the station cannot answer; the keeper publishes that within minutes
+    status: by_design
+    source: macula-services/mcl-fovea
+  - measure: The station's own metrics expose queue depth and admission refusals
+    status: org
+  countermeasures:
+  - measure: Slot admission budgets cap what one signer can occupy, so flooding is bounded
+    status: by_design
+    source: macula-io/macula plans/DESIGN_PQ_DHT_SLOTS_AND_BUDGET.md
+  - measure: Six stations spread the load; clients hold several pinned seeds
+    status: by_design
+    source: macula-io/macula (pool)
+  recovery:
+  - measure: Fail over to the other five stations; restart and re-fetch after the flood subsides
+    status: org

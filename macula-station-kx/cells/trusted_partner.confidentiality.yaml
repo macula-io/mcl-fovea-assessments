@@ -1,0 +1,27 @@
+id: trusted_partner.confidentiality
+status: assumed
+owner: raf.lefever@erlef.org
+threat:
+  definition: A vendor or dependency the station trusts — the QUIC stack, a container image, the VPS provider, a signing authority — uses that trust to read what passes through the station.
+  manifestations:
+  - A backdoor in a dependency exfiltrates relayed payloads
+  - The VPS provider snapshots the box's memory and disk
+  - A cross-signed authority issues a certificate that lets someone sit on the path
+defense:
+  detection:
+  - measure: Dependency provenance and image attestations are checked before a box runs anything
+    status: by_design
+    source: macula-ci-images (attest-image.yml)
+  - measure: The sealed-payload design lists exactly what a station on the path still sees, so the exposure is enumerated
+    status: by_design
+    source: macula-io/macula plans/DESIGN_E2E_PAYLOAD_CONFIDENTIALITY.md §9
+  countermeasures:
+  - measure: 'Sealed calls and streams: the provider''s KEM key, not the station''s, decrypts payloads'
+    status: by_design
+    source: macula-io/macula plans/DESIGN_E2E_PAYLOAD_CONFIDENTIALITY.md
+  - measure: Images and their SBOMs are verified by digest before deployment
+    status: by_design
+    source: macula-ci-images (attest-image.yml)
+  recovery:
+  - measure: Rebuild from the pinned builder images and rotate any key the vendor touched
+    status: org

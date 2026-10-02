@@ -1,0 +1,22 @@
+id: admin.confidentiality
+status: assumed
+owner: raf.lefever@erlef.org
+threat:
+  definition: 'Administrative channels leak: the admin plane for a station is reachable by someone who should not have it, or administrative data (keys, configs) is exposed during management.'
+  manifestations:
+  - The box's SSH is reachable from the public internet
+  - An admin tool caches the station's key on a workstation
+  - Configuration with embedded secrets is shared in a ticket
+defense:
+  detection:
+  - measure: Host access audits log who logged in and from where
+    status: org
+  countermeasures:
+  - measure: Admin access is by named maintainers' keys only, never shared credentials
+    status: org
+  - measure: Secrets live on the box in owner-only files and are never copied out
+    status: by_design
+    source: macula-services/mcl-om (/etc/mcl/secrets)
+  recovery:
+  - measure: Rotate exposed credentials, close the hole, audit access
+    status: org

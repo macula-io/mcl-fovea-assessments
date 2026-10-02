@@ -16,7 +16,16 @@ revision, never a branch.
 
 | Directory | Claim | State |
 |---|---|---|
-| [`macula-station-kx/`](macula-station-kx/fovea.yaml) | A macula station accepts only post-quantum key exchange (`kx_post_quantum_only`, probe `kx_group` v1), on station-nl-ams | One cell, by design: not grid-complete, so `fovea lint` reports the other 79 cells as missing, and nothing else |
+| [`macula-station-kx/`](macula-station-kx/fovea.yaml) | A macula station accepts only post-quantum key exchange (`kx_post_quantum_only`, probe `kx_group` v1), on station-nl-ams | Grid-complete: all 80 cells answered (`fovea lint` clean). The one probe-declared claim is the one mcl-fovea observes. |
+
+`macula-station-kx` is grid-complete under spec v0.4: every one of the 80
+cells is answered — `assessed` only where executable evidence exists (the kx
+claim's probe and test), otherwise `assumed` (drafted from the repositories
+and design documents they cite), on `roadmap` with a `review_by` date, or
+`na` with a written reason. The header's `policy` and `targets` are
+unchanged, and the observer keeps observing the claim from the signed
+revision it ships (`macula-station-kx-v1`); a new signed tag is what moves
+the observer onto this grid-complete revision.
 
 ## Checking an assessment
 
@@ -24,5 +33,5 @@ revision, never a branch.
 fovea lint macula-station-kx
 ```
 
-(`fovea` is macula-fovea's CLI.) The only findings for `macula-station-kx`
-are `grid_missing_cell`, for the cells it deliberately leaves out.
+(`fovea` is macula-fovea's CLI.) `fovea lint` reports no findings for
+`macula-station-kx`.

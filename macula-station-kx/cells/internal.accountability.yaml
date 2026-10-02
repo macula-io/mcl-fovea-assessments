@@ -1,0 +1,25 @@
+id: internal.accountability
+status: assumed
+owner: raf.lefever@erlef.org
+threat:
+  definition: Actions taken on a station leave no trace that names who did them, so a misdeed by an insider cannot be attributed, and the mesh cannot tell an honest operator from a compromised one.
+  manifestations:
+  - Box shell access is shared and unlogged, so two operators are indistinguishable
+  - Config and release changes land without an attributable review record
+  - The station keeps no audit of which node put or fetched a record
+defense:
+  detection:
+  - measure: Fleet changes are signed release tags with a named signer
+    status: by_design
+    source: macula-io/macula-fleet
+  - measure: SSH access to station boxes goes through personal accounts with journaled sessions
+    status: org
+  countermeasures:
+  - measure: Every change to a box arrives as a signed tag whose author is in the git history
+    status: by_design
+    source: macula-io/macula-fleet
+  - measure: Operator access is limited to named maintainers and reviewed
+    status: org
+  recovery:
+  - measure: After an incident, correlate the box journal with git history and the keeper's fetch logs
+    status: org

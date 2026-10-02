@@ -1,0 +1,26 @@
+id: trusted_partner.integrity
+status: assumed
+owner: raf.lefever@erlef.org
+threat:
+  definition: Something the station depends on is altered upstream — a tampered release, a poisoned dependency, a modified base image — so the station runs code nobody reviewed.
+  manifestations:
+  - A dependency release is replaced with a malicious version in the registry
+  - A compromised CI job signs a backdoored station image
+  - The VPS provider alters the box's boot image
+defense:
+  detection:
+  - measure: Every image is verified by digest against cosign signature, SPDX SBOM and SLSA provenance before it runs
+    status: by_design
+    source: macula-ci-images (attest-image.yml)
+  - measure: Reproducible pinned builder images carry the toolchain, so drift between them fails the service's tests
+    status: by_design
+    source: macula-ci-images (pinned builder)
+  countermeasures:
+  - measure: Digest-pinned images and verified provenance
+    status: by_design
+    source: macula-ci-images (attest-image.yml)
+  - measure: Dependency updates land through reviewed PRs, not silently
+    status: org
+  recovery:
+  - measure: Roll back to the last verified digest and rebuild
+    status: org

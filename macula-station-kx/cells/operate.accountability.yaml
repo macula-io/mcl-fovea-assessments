@@ -1,0 +1,25 @@
+id: operate.accountability
+status: assumed
+owner: raf.lefever@erlef.org
+threat:
+  definition: The station's runtime behaviour leaves no record of who asked for what, so misuse in operation cannot be attributed and incidents cannot be reconstructed.
+  manifestations:
+  - Record fetches are not logged with their requesters
+  - The station keeps no history of what it served
+  - Runtime errors are logged without context
+defense:
+  detection:
+  - measure: The observer's signed history is a third-party record of what the station accepted
+    status: by_design
+    source: macula-services/mcl-fovea
+  - measure: Station logs journal errors and connections
+    status: org
+  countermeasures:
+  - measure: Agents and services on the mesh carry realm identities their records are signed with
+    status: by_design
+    source: macula-io/macula (realm identities)
+  - measure: Log retention and analysis for the station boxes
+    status: org
+  recovery:
+  - measure: Reconstruct an incident from journals, the observer's records and the keeper's fetch log
+    status: org

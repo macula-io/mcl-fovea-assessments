@@ -1,0 +1,24 @@
+id: machine_agent.accountability
+status: assumed
+owner: raf.lefever@erlef.org
+threat:
+  definition: 'An automated actor''s actions cannot be traced to a responsible party: agents act without identity or leave no signed record, so the mesh cannot tell which automation did what.'
+  manifestations:
+  - An agent calls procedures without a signed identity in the logs
+  - Automated changes land without an author field
+  - Two agents share one credential and are indistinguishable
+defense:
+  detection:
+  - measure: On the mesh, agents carry realm identities and their facts are signed records
+    status: by_design
+    source: macula-io/macula (realm identities)
+  countermeasures:
+  - measure: 'Agent containment: limits on scopes, egress and tools, held as checkable claims'
+    status: roadmap
+    source: macula-services/mcl-fovea plans/PLAN_FOVEA_STRATEGY.md (agent containment)
+  - measure: Named credentials per agent, never shared
+    status: org
+  recovery:
+  - measure: Trace the signed records back to the agent's node id and hold its owner to account
+    status: org
+review_by: '2027-09-30'

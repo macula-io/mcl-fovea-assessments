@@ -1,0 +1,23 @@
+id: temporal.authenticity
+status: assumed
+owner: raf.lefever@erlef.org
+threat:
+  definition: 'Old identities outlive their truth: a superseded key still verifies, a retired scheme still signs, and readers accept signatures the present no longer stands behind.'
+  manifestations:
+  - A superseded realm key is still trusted by some peers
+  - A retired station key still validates old records as current
+  - A deprecated signature scheme is accepted past its retirement date
+defense:
+  detection:
+  - measure: The realm publishes tombstones and trust-list updates; stations refresh the trust list before expiry
+    status: by_design
+    source: macula-io/macula plans/DESIGN_PQ_DHT_SLOTS_AND_BUDGET.md §2.1
+  countermeasures:
+  - measure: 'Trust-list expiry: a station with no current trust list checks nothing'
+    status: by_design
+    source: macula-io/macula plans/DESIGN_PQ_DHT_SLOTS_AND_BUDGET.md
+  - measure: Key supersession via published, signed rotation
+    status: org
+  recovery:
+  - measure: Refresh the trust list, unpin the old key, re-verify against the current one
+    status: org

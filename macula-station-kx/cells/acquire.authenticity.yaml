@@ -1,0 +1,23 @@
+id: acquire.authenticity
+status: assumed
+owner: raf.lefever@erlef.org
+threat:
+  definition: 'The vendor itself cannot be verified: the station cannot tell a genuine vendor artifact from a lookalike, or the vendor''s claimed provenance is unprovable.'
+  manifestations:
+  - An artifact is signed by a key that is not the vendor's published key
+  - A vendor's provenance claims are self-asserted with nothing behind them
+  - A squatted registry name serves plausible images
+defense:
+  detection:
+  - measure: Signer allowlists pin the exact key and repository each image may come from
+    status: by_design
+    source: macula-ci-images (attest-image.yml)
+  countermeasures:
+  - measure: cosign verification of signature, SBOM and provenance for every image, before anything runs
+    status: by_design
+    source: macula-ci-images (attest-image.yml)
+  - measure: Vendor public keys are distributed out of band, not fetched from the vendor's own site alone
+    status: org
+  recovery:
+  - measure: Block the signer, revoke trust, re-verify everything it signed
+    status: org

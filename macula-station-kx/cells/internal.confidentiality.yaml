@@ -1,0 +1,28 @@
+id: internal.confidentiality
+status: assumed
+owner: raf.lefever@erlef.org
+threat:
+  definition: 'An operator, developer or administrator with legitimate access to a station or its deployment path misuses that access to read what the station carries or holds: relayed payloads, DHT records, or the node identity key.'
+  manifestations:
+  - An operator with shell access to the station box copies the node identity key and signs records as the station
+  - A developer adds a debug endpoint to a station release that streams relayed call payloads somewhere
+  - An administrator with fleet access points a station at a hostile upstream and reads the traffic it forwards
+defense:
+  detection:
+  - measure: macula-fleet's reconciler refuses and reports a box that does not run the verified image or config
+    status: by_design
+    source: macula-io/macula-fleet (reconciler)
+  - measure: mcl-fovea, outside the fleet, publishes signed observations of what a station accepts, which a compromised box cannot fake
+    status: by_design
+    source: macula-services/mcl-fovea
+  countermeasures:
+  - measure: Payloads sealed end to end (E2E seal scheme 1), so a station relays calls it cannot read
+    status: by_design
+    source: macula-io/macula plans/DESIGN_E2E_PAYLOAD_CONFIDENTIALITY.md
+  - measure: Sealed pubsub, so a station relays events it cannot read
+    status: roadmap
+    source: macula-io/macula plans/DESIGN_E2E_SEALED_PUBSUB.md
+  recovery:
+  - measure: Rotate the station node identity key and re-point clients to the new node id
+    status: org
+review_by: '2027-06-30'

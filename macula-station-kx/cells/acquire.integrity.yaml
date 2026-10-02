@@ -1,0 +1,23 @@
+id: acquire.integrity
+status: assumed
+owner: raf.lefever@erlef.org
+threat:
+  definition: 'What arrives from the vendor is not what was ordered: a tampered image in transit, a dependency substituted in a registry, or firmware altered between vendor and datacentre.'
+  manifestations:
+  - A registry mirror serves a modified station image
+  - A dependency's release is swapped for a backdoor between publish and lock
+  - The box arrives with firmware the vendor did not ship
+defense:
+  detection:
+  - measure: Digest verification against the vendor's signed manifest, not against whatever the mirror serves
+    status: by_design
+    source: macula-io/macula-fleet
+  countermeasures:
+  - measure: Everything the box runs is verified by digest and provenance before execution
+    status: by_design
+    source: macula-ci-images (attest-image.yml)
+  - measure: Trusted vendor channels only; no unsigned downloads
+    status: org
+  recovery:
+  - measure: Refuse the artifact, re-fetch from the vendor, re-verify
+    status: org

@@ -1,0 +1,22 @@
+id: physical_natural.availability
+status: assumed
+owner: raf.lefever@erlef.org
+threat:
+  definition: 'Nature or hardware failure takes the station down: fire, flood, power loss, a dead disk or a failed NIC removes the box from the mesh without warning.'
+  manifestations:
+  - A datacentre power failure drops the box
+  - A disk failure loses the identity volume
+  - A cooling failure throttles the CPU until the station stops answering
+defense:
+  detection:
+  - measure: The observer's rounds turn unknown, and box monitoring alerts
+    status: by_design
+    source: macula-services/mcl-fovea
+  countermeasures:
+  - measure: Six stations in several datacentres mean one site's loss is partial
+    status: org
+  - measure: Provider SLAs and redundant power and network
+    status: org
+  recovery:
+  - measure: Re-enroll a replacement box from the backed-up identity key; the mesh heals
+    status: org

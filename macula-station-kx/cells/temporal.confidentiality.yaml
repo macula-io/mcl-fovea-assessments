@@ -1,0 +1,24 @@
+id: temporal.confidentiality
+status: assumed
+owner: raf.lefever@erlef.org
+threat:
+  definition: 'Time breaks the station''s secrecy: harvest-now-decrypt-later capture of sealed payloads and hybrid keys, and the aging of the classical components that back the post-quantum primitives.'
+  manifestations:
+  - Captured sealed traffic is stored until a quantum computer breaks the hybrid's classical half
+  - The RSA-PSS and P-384 components of pq_hybrid signatures age past safety
+  - A captured record's signature scheme is deprecated while the record is still relied on
+defense:
+  detection:
+  - measure: mcl-fovea's kx probe continuously checks the station still refuses classical key exchange
+    status: by_design
+    source: macula-services/mcl-fovea
+  countermeasures:
+  - measure: Post-quantum-only key exchange (ML-KEM hybrid) and ML-DSA-87 identities
+    status: by_design
+    source: macula-io/macula-pqc
+  - measure: E2E seal scheme 1 rests on ML-KEM-1024 even where a classical half is present
+    status: by_design
+    source: macula-io/macula plans/DESIGN_E2E_PAYLOAD_CONFIDENTIALITY.md
+  recovery:
+  - measure: Rotate to the next scheme generation before the current one's margin is gone
+    status: org

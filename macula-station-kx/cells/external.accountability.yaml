@@ -1,0 +1,27 @@
+id: external.accountability
+status: assumed
+owner: raf.lefever@erlef.org
+threat:
+  definition: 'Outside activity against a station leaves the operator unable to say what happened: probes and attempts are not recorded, so incidents are invisible until damage shows.'
+  manifestations:
+  - Failed handshakes are dropped without a trace
+  - No log records which remote parties queried the DHT
+  - Attack traffic is indistinguishable from ordinary traffic in retrospect
+defense:
+  detection:
+  - measure: mcl-warden and mcl-sentinel watch brute force on public boxes and would log the attempt
+    status: roadmap
+    source: macula-services/mcl-warden, macula-services/mcl-sentinel
+  - measure: The station journals connection attempts with remote addresses
+    status: org
+  countermeasures:
+  - measure: The observer's signed history gives a third-party timeline of what the station accepted
+    status: by_design
+    source: macula-services/mcl-fovea
+  - measure: Deploy warden/sentinel to the station boxes
+    status: roadmap
+    source: macula-services/mcl-warden
+  recovery:
+  - measure: After an incident, reconstruct the timeline from the journal, the observer's records and the keeper's fetch log
+    status: org
+review_by: '2027-03-31'

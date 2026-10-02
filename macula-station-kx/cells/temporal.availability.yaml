@@ -1,0 +1,23 @@
+id: temporal.availability
+status: assumed
+owner: raf.lefever@erlef.org
+threat:
+  definition: 'The station ages out of service: dependencies stop being maintained, the OS loses support, hardware reaches end of life, and the station cannot run a current release anymore.'
+  manifestations:
+  - The base OS reaches end of support while the station still runs it
+  - A dependency is deprecated and its replacement requires a rewrite
+  - Hardware EOL forces an unplanned migration
+defense:
+  detection:
+  - measure: Dependabot and pin-staleness checks flag aging dependencies and images
+    status: by_design
+    source: macula-io/macula-fovea (scripts/pin checks)
+  countermeasures:
+  - measure: Regular release cadence keeps the station on current, supported software
+    status: org
+  - measure: Pinned, reproducible builder images make rebuilds deterministic
+    status: by_design
+    source: macula-ci-images
+  recovery:
+  - measure: Rebuild on the current image, migrate to new hardware, re-enroll
+    status: org

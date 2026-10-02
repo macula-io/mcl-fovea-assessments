@@ -1,0 +1,24 @@
+id: internal.authenticity
+status: assumed
+owner: raf.lefever@erlef.org
+threat:
+  definition: An insider uses the station's own identity key outside its purpose, or issues config under the station's name, so peers accept something the station never said.
+  manifestations:
+  - An operator signs a forged realm advertisement with the station's key
+  - An insider registers a procedure advertisement the org never delegated
+  - A stolen cookie lets an operator run a second Erlang node that answers as the station
+defense:
+  detection:
+  - measure: The station's key id and node id are pinned in peer config; a second signer for the same slot is a fork every reader sees
+    status: by_design
+    source: macula-io/macula plans/DESIGN_PQ_SIGNED_FRAMES_AND_RECORDS.md
+  countermeasures:
+  - measure: The identity key lives in a volume separate from the release; access to the box is not access to the key
+    status: by_design
+    source: macula-io/macula-fleet (volumes)
+  - measure: The handshake challenge proves possession of the node key before a session is accepted
+    status: by_design
+    source: macula-io/macula (handshake v5)
+  recovery:
+  - measure: Rotate the identity key; the old key id is retired by tombstone
+    status: org

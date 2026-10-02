@@ -1,0 +1,24 @@
+id: internal.integrity
+status: assumed
+owner: raf.lefever@erlef.org
+threat:
+  definition: 'Someone inside the operation alters what a station stores or relays: rewrites a DHT record, drops or reorders relayed frames, or changes the station''s configuration so the mesh disagrees with itself.'
+  manifestations:
+  - An operator edits a station's config to advertise a bogus procedure on behalf of an org
+  - A developer ships a release that silently drops records from certain slots
+  - A support session tampers with a stored record and puts it back
+defense:
+  detection:
+  - measure: Every DHT record carries its signer's signature; a station that stores a tampered record fails verification for every reader
+    status: by_design
+    source: macula-io/macula plans/DESIGN_PQ_SIGNED_FRAMES_AND_RECORDS.md
+  countermeasures:
+  - measure: Records are signed objects the station cannot rewrite without the signer's key; verification is offline and key-pinned
+    status: by_design
+    source: macula-io/macula plans/DESIGN_PQ_SIGNED_FRAMES_AND_RECORDS.md
+  - measure: The fleet reconciler re-applies the signed config and image, overwriting local edits
+    status: by_design
+    source: macula-io/macula-fleet
+  recovery:
+  - measure: Re-run the reconciler from the last signed tag and re-fetch the affected slots
+    status: org

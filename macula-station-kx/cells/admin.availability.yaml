@@ -1,0 +1,23 @@
+id: admin.availability
+status: assumed
+owner: raf.lefever@erlef.org
+threat:
+  definition: 'Administration takes the system down: a maintenance window goes wrong, a rotation is applied to all boxes at once, or an admin action blocks the station''s data path.'
+  manifestations:
+  - A fleet-wide rotation is applied to every box in one go and one step breaks all of them
+  - A maintenance action stops the listener and the restart fails
+  - A lockout (lost keys) leaves the boxes unreachable
+defense:
+  detection:
+  - measure: The fleet reconciler and the observer report boxes that stop answering
+    status: by_design
+    source: macula-io/macula-fleet
+  countermeasures:
+  - measure: Roll out to one box, verify, then the rest; never all at once
+    status: org
+  - measure: The reconciler completes a failed rollout on its next run
+    status: by_design
+    source: macula-io/macula-fleet
+  recovery:
+  - measure: Restore from the last signed tag; re-enroll a box whose keys were lost
+    status: org
