@@ -1,8 +1,8 @@
-fovea: '0.4'
+fovea: '0.6'
 system: macula-station-kx
 assessment_date: '2026-10-02'
 owner: raf.lefever@erlef.org
-description: 'The macula station system of the io.macula fleet: the six public stations, the software they run (station OTP release, QUIC listener, DHT record store, pubsub and RPC relay, mesh pool), their node identity keys, their configuration and their build-and-delivery path (macula-fleet). Grid-complete under macula-fovea spec v0.4: every one of the 80 cells is answered, assumed, on roadmap, or justified not applicable. One claim, kx_post_quantum_only, is declared with probe evidence and observed live by mcl-fovea; the other cells are drafted from the repositories and the design documents they cite, and are marked assumed until each one gains executable evidence. Drafted with model assistance; the named owner signs what ships.'
+description: 'The macula station system of the io.macula fleet: the six public stations, the software they run (station OTP release, QUIC listener, DHT record store, pubsub and RPC relay, mesh pool), their node identity keys, their configuration and their build-and-delivery path (macula-fleet). Grid-complete under macula-fovea spec v0.6: every one of the 80 cells is answered, assumed, on roadmap, or justified not applicable. Two claims are declared with probe evidence and observed live by mcl-fovea, kx_post_quantum_only (in_motion.confidentiality) and station_runs_signed_release (deliver.integrity); the other cells are drafted from the repositories and the design documents they cite, and are marked assumed until each one gains executable evidence. Drafted with model assistance; the named owner signs what ships.'
 scope:
   in:
   - 'the six io.macula fleet stations and the software they run: the station OTP release, its QUIC listener, DHT record store, pubsub and RPC relay, and mesh pool'
