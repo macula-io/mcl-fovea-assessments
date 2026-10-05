@@ -16,7 +16,7 @@ revision, never a branch.
 
 | Directory | Claim | State |
 |---|---|---|
-| [`macula-station-kx/`](macula-station-kx/fovea.yaml) | A macula station accepts only post-quantum key exchange (`kx_post_quantum_only`, probe `kx_group` v1), on station-nl-ams | Grid-complete: all 80 cells answered (`fovea lint` clean). The one probe-declared claim is the one mcl-fovea observes. |
+| [`macula-station-kx/`](macula-station-kx/fovea.yaml) | A macula station accepts only post-quantum key exchange (`kx_post_quantum_only`, probe `kx_group` v1), on all six io.macula fleet stations | Grid-complete: all 80 cells answered (`fovea lint` clean). The one probe-declared claim is the one mcl-fovea observes. |
 
 `macula-station-kx` is grid-complete under spec v0.4: every one of the 80
 cells is answered — `assessed` only where executable evidence exists (the kx
