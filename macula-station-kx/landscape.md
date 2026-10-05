@@ -15,7 +15,7 @@ column (macula-fovea spec v0.4, 14-instantiation).*
                               ▼                                            ▼
                       reconciler on each box                      operator (admin)
                               │                                            │
-   observer (mcl-fovea) ──────┼────── probes station-nl-ams :4433 ──►      │
+   observer (mcl-fovea) ──────┼────── probes all six stations :4433 ─►     │
    on its own box             │                                            │
         │                     ▼                                            │
         │        ┌───────────────────────────────────┐                     │

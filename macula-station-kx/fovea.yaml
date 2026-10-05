@@ -59,6 +59,16 @@ targets:
     stations:
     - address: '[2600:3c0e::2000:c2ff:fed0:f20b]:4433'
       node_id: 000370eebafa9a89a44c9448b4796788fbff1885abd67c80d681d28cebb04b0c
+    - address: '[2a01:4f9:c014:4259::be:1]:4433'
+      node_id: 004d1f470097ccf8826ce291900e882fdb1f20375e53901facaec0f23eb4efd8
+    - address: '[2a01:4f8:1c1f:8ab8::be:2]:4433'
+      node_id: 00a9b4143e24ae42e5a058dd28c9aab585636acd17012cc4d418a3bb5413af22
+    - address: '[2600:3c1a:e001:19::be:2]:4433'
+      node_id: 0063acc4a5af409ca6b15041975128d389222c48366fb3a1dfb948da01f7ca94
+    - address: '[2a01:4f8:c014:c8b3::be:1]:4433'
+      node_id: 00df68247d119685f94030afdb203ab7a2a105fb6093a964dbf0509a57e86435
+    - address: '[2a01:7e01::f03c:94ff:fe22:719e]:4433'
+      node_id: 00cd0008ec2e72b6572b7bf6fc8b048d7fe83993faf1fc544370f2bc1eb71f85
 policy:
   publish: every_result
   cadence: PT1H
