@@ -40,7 +40,11 @@ anchor's *ceremony*, not of the anchor as an object.
    recovery, because the fleet's whole verification path ran through it.
    *Guard:* pinning and signer allowlists on the boxes (assessed in the
    `create` and `deliver` columns); the pipeline's own compromise is the
-   residual risk named here.
+   residual risk named here. The claim `station_runs_signed_release`
+   (`deliver.integrity`) rests on the same identity, and on Sigstore's public
+   trust root and transparency log: it holds when a station's release was
+   signed by that release's own build, so a compromised pipeline makes it hold
+   falsely.
 
 4. **The deployment path: macula-fleet and its signer.**
    Whoever can sign a fleet release and change `macula-fleet`'s config can

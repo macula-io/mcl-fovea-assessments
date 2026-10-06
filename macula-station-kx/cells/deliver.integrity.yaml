@@ -15,6 +15,17 @@ defense:
   - measure: A box that does not run the verified image or config is reported and refused
     status: by_design
     source: macula-io/macula-fleet
+  - measure: Each station names, under its own signature, the release it runs, and an outside observer checks every hour that it is a release the station's own release build signed
+    status: by_design
+    source: macula-io/macula-station (station_version in the signed endpoint record) and macula-services/mcl-fovea
+    evidence:
+    - kind: probe
+      claim: station_runs_signed_release
+      probe: station_release
+      version: 1
+      target: fleet_stations
+      expect:
+        accepted: [signed_release]
   countermeasures:
   - measure: Digest-pinned images everywhere; floating main tags are ended
     status: roadmap
